@@ -1,0 +1,74 @@
+<div class="chat-window" *ngIf="activeThread$ | async as activeThread; else welcomeScreen">
+    <!-- Header -->
+    <div class="chat-header">
+        <div class="header-info">
+            <img [src]="activeThread.avatar" class="avatar-sm">
+            <div class="header-text">
+                <span class="thread-name">{{ activeThread.name }}</span>
+                <span class="thread-status" *ngIf="activeThread.type === 'dm'">En ligne</span>
+                <span class="thread-status" *ngIf="activeThread.type === 'group'">
+                    {{ activeThread.participants.length }} participants
+                </span>
+            </div>
+        </div>
+        <div class="header-actions">
+            <button class="btn-icon"><i class="fas fa-search"></i></button>
+            <button class="btn-icon"><i class="fas fa-paperclip"></i></button>
+            <button class="btn-icon"><i class="fas fa-ellipsis-v"></i></button>
+        </div>
+    </div>
+
+    <!-- Messages Area -->
+    <div class="messages-container" #scrollContainer>
+        <div class="message-wrapper" *ngFor="let msg of messages$ | async"
+            [ngClass]="{'mine': msg.isMe, 'theirs': !msg.isMe}">
+
+            <div class="message-bubble">
+                <div class="sender-name" *ngIf="!msg.isMe && activeThread.type === 'group'">
+                    {{ getSenderName(msg.senderId, activeThread) }}
+                </div>
+
+                <div class="message-text">{{ msg.text }}</div>
+
+                <div class="message-meta">
+                    <span class="time">{{ msg.timestamp | date:'shortTime' }}</span>
+                    <span class="status" *ngIf="msg.isMe">
+                        <i class="fas fa-check-double"></i>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Input Area -->
+    <div class="chat-input-area">
+        <button class="btn-icon"><i class="far fa-smile"></i></button>
+        <button class="btn-icon"><i class="fas fa-plus"></i></button>
+
+        <div class="input-wrapper">
+            <input type="text" placeholder="Tapez un message" [(ngModel)]="newMessage" (keydown.enter)="sendMessage()">
+        </div>
+
+        <button class="btn-icon send-btn" *ngIf="newMessage.trim()" (click)="sendMessage()">
+            <i class="fas fa-paper-plane"></i>
+        </button>
+        <button class="btn-icon" *ngIf="!newMessage.trim()">
+            <i class="fas fa-microphone"></i>
+        </button>
+    </div>
+</div>
+
+<ng-template #welcomeScreen>
+    <div class="welcome-screen">
+        <div class="welcome-content">
+            <img src="assets/images/logo-placeholder.png" alt="ENI Connect" class="welcome-logo">
+            <!-- Replace with app logo if available -->
+            <h2>ENI Connect Web</h2>
+            <p>Envoyez et recevez des messages sans connectez votre téléphone.</p>
+            <p>Utilisez ENI Connect sur jusqu'à 4 appareils liés et 1 téléphone.</p>
+            <div class="encryption-note">
+                <i class="fas fa-lock"></i> Protégé par le chiffrement de bout en bout
+            </div>
+        </div>
+    </div>
+</ng-template>

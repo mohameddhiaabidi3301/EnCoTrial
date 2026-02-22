@@ -1,0 +1,317 @@
+/* Events — Apple-inspired */
+.events-page {
+    min-height: 100vh;
+    background: var(--bg-secondary);
+}
+
+.page-container {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: var(--space-8) var(--space-8);
+    animation: fadeInUp 0.5s var(--ease-out) both;
+}
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-8);
+}
+
+.page-header h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    margin: 0;
+    letter-spacing: -0.03em;
+}
+
+.page-header h1 i {
+    color: var(--color-accent);
+    font-size: 1.5rem;
+}
+
+/* View Toggle */
+.view-toggle {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-3) var(--space-4);
+    margin-bottom: var(--space-6);
+}
+
+.view-btn {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: 0.4rem 1rem;
+    background: transparent;
+    border: none;
+    border-radius: var(--radius-full);
+    font-weight: 500;
+    font-size: 0.8125rem;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all var(--duration-fast) var(--ease-out);
+}
+
+.view-btn:hover {
+    background: var(--color-gray-100);
+}
+
+.view-btn.active {
+    background: var(--color-accent);
+    color: var(--color-white);
+}
+
+.filter-select {
+    margin-left: auto;
+}
+
+.filter-select select {
+    min-width: 180px;
+    font-size: 0.8125rem;
+}
+
+/* Events List */
+.events-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+}
+
+/* Event Card */
+.event-card {
+    display: grid;
+    grid-template-columns: auto 260px 1fr;
+    gap: var(--space-5);
+    padding: var(--space-5);
+    transition: all var(--duration-base) var(--ease-out);
+}
+
+.event-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+/* Date Badge */
+.event-date-badge {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 72px;
+    padding: var(--space-3);
+    background: var(--color-accent);
+    color: var(--color-white);
+    border-radius: var(--radius-lg);
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.event-date-badge .day {
+    font-size: 1.75rem;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.02em;
+}
+
+.event-date-badge .month {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: 2px;
+}
+
+.event-date-badge .year {
+    font-size: 0.625rem;
+    opacity: 0.7;
+    margin-top: 1px;
+}
+
+/* Event Image */
+.event-image {
+    position: relative;
+    width: 260px;
+    height: 160px;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.event-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--duration-slow) var(--ease-out);
+}
+
+.event-card:hover .event-image img {
+    transform: scale(1.04);
+}
+
+.event-category {
+    position: absolute;
+    top: var(--space-3);
+    right: var(--space-3);
+    padding: 0.25rem 0.6rem;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(8px);
+    color: var(--color-white);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    border-radius: var(--radius-full);
+    letter-spacing: 0.02em;
+}
+
+/* Event Content */
+.event-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.event-content h3 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin-bottom: var(--space-2);
+    letter-spacing: -0.02em;
+}
+
+.event-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+    margin-bottom: var(--space-3);
+    font-size: 0.75rem;
+    color: var(--text-tertiary);
+}
+
+.event-meta span {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.event-meta i {
+    color: var(--color-accent);
+    font-size: 0.6875rem;
+}
+
+.event-description {
+    font-size: 0.8125rem;
+    color: var(--text-secondary);
+    line-height: 1.55;
+    margin-bottom: var(--space-3);
+}
+
+/* Footer */
+.event-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+    padding-top: var(--space-3);
+    border-top: 1px solid var(--border-color);
+}
+
+.participants {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+}
+
+.participants-avatars {
+    display: flex;
+    align-items: center;
+}
+
+.participants-avatars img {
+    width: 28px;
+    height: 28px;
+    border-radius: var(--radius-sm);
+    border: 2px solid var(--color-white);
+    margin-left: -6px;
+}
+
+.participants-avatars img:first-child {
+    margin-left: 0;
+}
+
+.more-count {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    background: var(--color-gray-200);
+    color: var(--text-secondary);
+    font-size: 0.625rem;
+    font-weight: 600;
+    border-radius: var(--radius-sm);
+    border: 2px solid var(--color-white);
+    margin-left: -6px;
+}
+
+.participants-text {
+    font-size: 0.75rem;
+    color: var(--text-tertiary);
+    font-weight: 500;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .event-card {
+        grid-template-columns: auto 1fr;
+    }
+
+    .event-image {
+        grid-column: 1 / -1;
+        width: 100%;
+        height: 180px;
+    }
+}
+
+@media (max-width: 768px) {
+    .page-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--space-3);
+    }
+
+    .page-header .btn {
+        width: 100%;
+    }
+
+    .view-toggle {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .filter-select {
+        margin-left: 0;
+    }
+
+    .event-card {
+        grid-template-columns: 1fr;
+    }
+
+    .event-date-badge {
+        width: 100%;
+        flex-direction: row;
+        justify-content: center;
+        gap: var(--space-3);
+    }
+
+    .event-footer {
+        flex-direction: column;
+        gap: var(--space-3);
+        align-items: stretch;
+    }
+
+    .event-footer .btn {
+        width: 100%;
+    }
+}

@@ -1,0 +1,137 @@
+<header class="main-header">
+    <div class="header-container">
+        <!-- Logo and Brand -->
+        <div class="header-brand">
+            <a routerLink="/dashboard" class="brand-link">
+                <img src="assets/images/enicar-official-logo.jpg" alt="ENI Carthage" class="brand-logo">
+                <div class="brand-text">
+                    <span class="brand-name">ENICAR</span>
+                    <span class="brand-sub">Connect</span>
+                </div>
+            </a>
+        </div>
+
+        <!-- Search Bar -->
+        <div class="header-search">
+            <i class="fas fa-search search-icon"></i>
+            <input type="text" class="search-input" placeholder="Rechercher personnes, événements...">
+        </div>
+
+        <!-- Navigation Menu -->
+        <nav class="header-nav">
+            <a routerLink="/dashboard" routerLinkActive="active" class="nav-item">
+                <i class="fas fa-home"></i>
+                <span>Accueil</span>
+            </a>
+            <a routerLink="/groups" routerLinkActive="active" class="nav-item">
+                <i class="fas fa-users"></i>
+                <span>Groupes</span>
+            </a>
+            <a routerLink="/messages" routerLinkActive="active" class="nav-item">
+                <i class="fas fa-comments"></i>
+                <span>Messages</span>
+            </a>
+            <a routerLink="/events" routerLinkActive="active" class="nav-item">
+                <i class="fas fa-calendar-alt"></i>
+                <span>Événements</span>
+            </a>
+            <a routerLink="/jobs" routerLinkActive="active" class="nav-item">
+                <i class="fas fa-briefcase"></i>
+                <span>Emplois</span>
+            </a>
+            <a routerLink="/services" routerLinkActive="active" class="nav-item">
+                <i class="fas fa-cog"></i>
+                <span>Services</span>
+            </a>
+        </nav>
+
+        <!-- Right Section -->
+        <div class="header-actions">
+            <!-- Notifications -->
+            <div class="action-item notifications">
+                <button class="action-btn">
+                    <i class="fas fa-bell"></i>
+                    <span class="badge-count">5</span>
+                </button>
+                <div class="dropdown-menu notifications-dropdown">
+                    <div class="dropdown-header">
+                        <h3>Notifications</h3>
+                        <a href="#" class="mark-read">Tout marquer comme lu</a>
+                    </div>
+                    <div class="notifications-list">
+                        <div class="notification-item unread">
+                            <img src="https://ui-avatars.com/api/?name=Ahmed+Ben+Ali&background=C9A84C&color=0A1628"
+                                alt="User">
+                            <div class="notification-content">
+                                <p><strong>Ahmed Ben Ali</strong> a commenté votre publication</p>
+                                <span class="notification-time">Il y a 5 minutes</span>
+                            </div>
+                        </div>
+                        <div class="notification-item">
+                            <img src="https://ui-avatars.com/api/?name=Sarah+Trabelsi&background=C9A84C&color=0A1628"
+                                alt="User">
+                            <div class="notification-content">
+                                <p><strong>Sarah Trabelsi</strong> vous a envoyé un message</p>
+                                <span class="notification-time">Il y a 1 heure</span>
+                            </div>
+                        </div>
+                        <div class="notification-item">
+                            <i class="fas fa-calendar event-icon"></i>
+                            <div class="notification-content">
+                                <p>Rappel: <strong>Conférence IA</strong> demain à 14h</p>
+                                <span class="notification-time">Il y a 2 heures</span>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="#" class="view-all">Voir toutes les notifications</a>
+                </div>
+            </div>
+
+            <!-- Messages -->
+            <div class="action-item messages">
+                <button class="action-btn" routerLink="/messages">
+                    <i class="fas fa-envelope"></i>
+                    <span class="badge-count">3</span>
+                </button>
+            </div>
+
+            <!-- User Profile -->
+            <div class="action-item profile">
+                <button class="profile-btn">
+                    <img src="https://ui-avatars.com/api/?name=Mohamed+Jerbi&background=C9A84C&color=0A1628"
+                        alt="Profile" class="profile-avatar">
+                    <span class="profile-name">Mohamed Jerbi</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="dropdown-menu profile-dropdown">
+                    <div class="profile-info">
+                        <img src="https://ui-avatars.com/api/?name=Mohamed+Jerbi&background=C9A84C&color=0A1628"
+                            alt="Profile">
+                        <div>
+                            <h4>Mohamed Jerbi</h4>
+                            <p>Étudiant — INFO2 · &#64;enicar.ucar.tn</p>
+                        </div>
+                    </div>
+                    <div class="dropdown-divider"></div>
+                    <a routerLink="/profile" class="dropdown-item">
+                        <i class="fas fa-user"></i>
+                        Mon profil
+                    </a>
+                    <a routerLink="/settings" class="dropdown-item">
+                        <i class="fas fa-cog"></i>
+                        Paramètres
+                    </a>
+                    <a href="#" class="dropdown-item">
+                        <i class="fas fa-question-circle"></i>
+                        Aide
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a href="javascript:void(0)" (click)="logout()" class="dropdown-item logout">
+                        <i class="fas fa-sign-out-alt"></i>
+                        Déconnexion
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>

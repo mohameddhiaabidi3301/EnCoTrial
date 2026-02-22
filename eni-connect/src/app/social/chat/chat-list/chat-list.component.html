@@ -1,0 +1,45 @@
+<div class="chat-list-header">
+    <div class="user-profile">
+        <img [src]="currentUser.avatar" alt="My Avatar" class="avatar-sm">
+        <span class="status-indicator" [ngClass]="currentUser.status"></span>
+    </div>
+    <div class="header-actions">
+        <button class="btn-icon" title="New Chat"><i class="fas fa-edit"></i></button>
+        <button class="btn-icon" title="Menu"><i class="fas fa-ellipsis-v"></i></button>
+    </div>
+</div>
+
+<div class="search-bar">
+    <div class="search-input-wrapper">
+        <i class="fas fa-search"></i>
+        <input type="text" placeholder="Rechercher ou démarrer une discussion" [(ngModel)]="searchTerm">
+    </div>
+</div>
+
+<div class="threads-list">
+    <div *ngFor="let thread of threads$ | async" class="thread-item"
+        [class.active]="(activeThreadId$ | async) === thread.id" (click)="onThreadClick(thread.id)">
+
+        <div class="avatar-wrapper">
+            <img [src]="thread.avatar" [alt]="thread.name" class="avatar">
+        </div>
+
+        <div class="thread-content">
+            <div class="thread-top">
+                <span class="thread-name">{{ thread.name }}</span>
+                <span class="thread-time" *ngIf="thread.lastMessage">{{ thread.lastMessage.timestamp | date:'shortTime'
+                    }}</span>
+            </div>
+
+            <div class="thread-bottom">
+                <p class="last-message">
+                    <span *ngIf="thread.lastMessage?.isMe" class="message-status">
+                        <i class="fas fa-check-double"></i>
+                    </span>
+                    {{ thread.lastMessage?.text || 'Aucun message' }}
+                </p>
+                <span class="unread-badge" *ngIf="thread.unreadCount > 0">{{ thread.unreadCount }}</span>
+            </div>
+        </div>
+    </div>
+</div>

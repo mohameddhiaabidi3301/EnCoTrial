@@ -1,0 +1,162 @@
+<div class="events-page">
+    <app-header></app-header>
+
+    <div class="page-container">
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1><i class="fas fa-calendar-alt"></i> Événements</h1>
+            <button class="btn btn-primary">
+                <i class="fas fa-plus"></i>
+                Créer un événement
+            </button>
+        </div>
+
+        <!-- View Toggle -->
+        <div class="view-toggle card">
+            <button class="view-btn active">
+                <i class="fas fa-list"></i> Liste
+            </button>
+            <button class="view-btn">
+                <i class="fas fa-calendar"></i> Calendrier
+            </button>
+            <div class="filter-select">
+                <select class="form-control">
+                    <option>Tous les événements</option>
+                    <option>Mes événements</option>
+                    <option>Événements à venir</option>
+                    <option>Événements passés</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Events List -->
+        <div class="events-list">
+            <!-- Event Card 1 -->
+            <div class="card event-card">
+                <div class="event-date-badge">
+                    <span class="day">18</span>
+                    <span class="month">FÉV</span>
+                    <span class="year">2026</span>
+                </div>
+                <div class="event-image">
+                    <img src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=600&h=300&fit=crop"
+                        alt="Event">
+                    <div class="event-category">Conférence</div>
+                </div>
+                <div class="event-content">
+                    <h3>Conférence Intelligence Artificielle</h3>
+                    <div class="event-meta">
+                        <span><i class="fas fa-clock"></i> 14:00 - 16:00</span>
+                        <span><i class="fas fa-map-marker-alt"></i> Amphithéâtre A</span>
+                        <span><i class="fas fa-user"></i> Organisé par Club IA</span>
+                    </div>
+                    <p class="event-description">
+                        Découvrez les dernières avancées en intelligence artificielle avec des experts du domaine.
+                        Au programme : Machine Learning, Deep Learning, et applications pratiques.
+                    </p>
+                    <div class="event-footer">
+                        <div class="participants">
+                            <div class="participants-avatars">
+                                <img src="https://ui-avatars.com/api/?name=User+1&background=0078D4&color=fff"
+                                    alt="User">
+                                <img src="https://ui-avatars.com/api/?name=User+2&background=10B981&color=fff"
+                                    alt="User">
+                                <img src="https://ui-avatars.com/api/?name=User+3&background=F59E0B&color=fff"
+                                    alt="User">
+                                <span class="more-count">+45</span>
+                            </div>
+                            <span class="participants-text">48 participants</span>
+                        </div>
+                        <button class="btn btn-primary btn-sm">
+                            <i class="fas fa-check"></i> Participer
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Event Card 2 -->
+            <div class="card event-card">
+                <div class="event-date-badge">
+                    <span class="day">22</span>
+                    <span class="month">FÉV</span>
+                    <span class="year">2026</span>
+                </div>
+                <div class="event-image">
+                    <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=600&h=300&fit=crop"
+                        alt="Event">
+                    <div class="event-category">Compétition</div>
+                </div>
+                <div class="event-content">
+                    <h3>Hackathon ENI Connect 2026</h3>
+                    <div class="event-meta">
+                        <span><i class="fas fa-clock"></i> 09:00 - 18:00</span>
+                        <span><i class="fas fa-map-marker-alt"></i> Salle Innovation</span>
+                        <span><i class="fas fa-user"></i> Organisé par Direction ENI</span>
+                    </div>
+                    <p class="event-description">
+                        24 heures de développement intensif ! Formez votre équipe et créez des solutions innovantes.
+                        Prix : 3000 TND pour l'équipe gagnante.
+                    </p>
+                    <div class="event-footer">
+                        <div class="participants">
+                            <div class="participants-avatars">
+                                <img src="https://ui-avatars.com/api/?name=User+4&background=EF4444&color=fff"
+                                    alt="User">
+                                <img src="https://ui-avatars.com/api/?name=User+5&background=3B82F6&color=fff"
+                                    alt="User">
+                                <span class="more-count">+28</span>
+                            </div>
+                            <span class="participants-text">30 participants</span>
+                        </div>
+                        <button class="btn btn-outline btn-sm">
+                            <i class="fas fa-star"></i> Intéressé
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Event Card 3 -->
+            <div class="card event-card">
+                <div class="event-date-badge">
+                    <span class="day">25</span>
+                    <span class="month">FÉV</span>
+                    <span class="year">2026</span>
+                </div>
+                <div class="event-image">
+                    <img src="https://images.unsplash.com/photo-1511632765486-a01980e01a18?w=600&h=300&fit=crop"
+                        alt="Event">
+                    <div class="event-category">Culturel</div>
+                </div>
+                <div class="event-content">
+                    <h3>Soirée Culturelle ENI</h3>
+                    <div class="event-meta">
+                        <span><i class="fas fa-clock"></i> 18:00 - 22:00</span>
+                        <span><i class="fas fa-map-marker-alt"></i> Campus ENI</span>
+                        <span><i class="fas fa-user"></i> Organisé par Club Culturel</span>
+                    </div>
+                    <p class="event-description">
+                        Une soirée exceptionnelle avec spectacles, musique, et gastronomie.
+                        Venez célébrer la diversité culturelle de notre école !
+                    </p>
+                    <div class="event-footer">
+                        <div class="participants">
+                            <div class="participants-avatars">
+                                <img src="https://ui-avatars.com/api/?name=User+6&background=8B5CF6&color=fff"
+                                    alt="User">
+                                <img src="https://ui-avatars.com/api/?name=User+7&background=EC4899&color=fff"
+                                    alt="User">
+                                <img src="https://ui-avatars.com/api/?name=User+8&background=14B8A6&color=fff"
+                                    alt="User">
+                                <span class="more-count">+92</span>
+                            </div>
+                            <span class="participants-text">95 participants</span>
+                        </div>
+                        <button class="btn btn-primary btn-sm">
+                            <i class="fas fa-check"></i> Participer
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

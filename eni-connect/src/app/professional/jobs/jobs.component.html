@@ -1,0 +1,203 @@
+<div class="jobs-page">
+    <app-header></app-header>
+
+    <div class="page-container">
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1><i class="fas fa-briefcase"></i> Offres d'Emploi & Stages</h1>
+            <button class="btn btn-primary">
+                <i class="fas fa-plus"></i>
+                Publier une offre
+            </button>
+        </div>
+
+        <!-- Filters -->
+        <div class="filters-section card">
+            <div class="filter-row">
+                <div class="filter-group">
+                    <label>Type</label>
+                    <select class="form-control">
+                        <option>Tous</option>
+                        <option>Stage</option>
+                        <option>CDI</option>
+                        <option>CDD</option>
+                        <option>Freelance</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Domaine</label>
+                    <select class="form-control">
+                        <option>Tous les domaines</option>
+                        <option>Développement Web</option>
+                        <option>Data Science</option>
+                        <option>Cybersécurité</option>
+                        <option>IA & Machine Learning</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Localisation</label>
+                    <select class="form-control">
+                        <option>Toutes les villes</option>
+                        <option>Tunis</option>
+                        <option>Ariana</option>
+                        <option>Sousse</option>
+                        <option>Sfax</option>
+                    </select>
+                </div>
+                <button class="btn btn-primary">
+                    <i class="fas fa-search"></i> Rechercher
+                </button>
+            </div>
+        </div>
+
+        <!-- Jobs List -->
+        <div class="jobs-list">
+            <!-- Job Card 1 -->
+            <div class="card job-card">
+                <div class="job-header">
+                    <div class="company-logo">
+                        <img src="https://ui-avatars.com/api/?name=Tech+Solutions&background=0078D4&color=fff&size=80"
+                            alt="Company">
+                    </div>
+                    <div class="job-info">
+                        <h3>Développeur Full Stack - Stage PFE</h3>
+                        <p class="company-name">
+                            <i class="fas fa-building"></i> Tech Solutions Tunisia
+                        </p>
+                        <div class="job-meta">
+                            <span class="job-type stage">
+                                <i class="fas fa-graduation-cap"></i> Stage
+                            </span>
+                            <span><i class="fas fa-map-marker-alt"></i> Tunis, Tunisie</span>
+                            <span><i class="fas fa-clock"></i> Publié il y a 2 jours</span>
+                        </div>
+                    </div>
+                    <button class="bookmark-btn">
+                        <i class="far fa-bookmark"></i>
+                    </button>
+                </div>
+
+                <div class="job-description">
+                    <p>Nous recherchons un stagiaire PFE motivé pour rejoindre notre équipe de développement.
+                        Vous travaillerez sur des projets web modernes utilisant React, Node.js et MongoDB.</p>
+                </div>
+
+                <div class="job-skills">
+                    <span class="skill-tag">React</span>
+                    <span class="skill-tag">Node.js</span>
+                    <span class="skill-tag">MongoDB</span>
+                    <span class="skill-tag">Git</span>
+                </div>
+
+                <div class="job-footer">
+                    <div class="job-salary">
+                        <i class="fas fa-money-bill-wave"></i>
+                        <span>Gratification: 500 TND/mois</span>
+                    </div>
+                    <button class="btn btn-primary btn-sm">
+                        <i class="fas fa-paper-plane"></i> Postuler
+                    </button>
+                </div>
+            </div>
+
+            <!-- Job Card 2 -->
+            <div class="card job-card">
+                <div class="job-header">
+                    <div class="company-logo">
+                        <img src="https://ui-avatars.com/api/?name=Data+Corp&background=10B981&color=fff&size=80"
+                            alt="Company">
+                    </div>
+                    <div class="job-info">
+                        <h3>Data Scientist Junior - CDI</h3>
+                        <p class="company-name">
+                            <i class="fas fa-building"></i> DataCorp Analytics
+                        </p>
+                        <div class="job-meta">
+                            <span class="job-type cdi">
+                                <i class="fas fa-briefcase"></i> CDI
+                            </span>
+                            <span><i class="fas fa-map-marker-alt"></i> Ariana, Tunisie</span>
+                            <span><i class="fas fa-clock"></i> Publié il y a 5 jours</span>
+                        </div>
+                    </div>
+                    <button class="bookmark-btn active">
+                        <i class="fas fa-bookmark"></i>
+                    </button>
+                </div>
+
+                <div class="job-description">
+                    <p>Rejoignez notre équipe Data Science et participez à des projets d'analyse de données à grande
+                        échelle.
+                        Expérience en Python, Machine Learning et visualisation de données requise.</p>
+                </div>
+
+                <div class="job-skills">
+                    <span class="skill-tag">Python</span>
+                    <span class="skill-tag">Machine Learning</span>
+                    <span class="skill-tag">TensorFlow</span>
+                    <span class="skill-tag">SQL</span>
+                    <span class="skill-tag">Power BI</span>
+                </div>
+
+                <div class="job-footer">
+                    <div class="job-salary">
+                        <i class="fas fa-money-bill-wave"></i>
+                        <span>Salaire: 2500-3500 TND/mois</span>
+                    </div>
+                    <button class="btn btn-primary btn-sm">
+                        <i class="fas fa-paper-plane"></i> Postuler
+                    </button>
+                </div>
+            </div>
+
+            <!-- Job Card 3 -->
+            <div class="card job-card">
+                <div class="job-header">
+                    <div class="company-logo">
+                        <img src="https://ui-avatars.com/api/?name=Cyber+Sec&background=EF4444&color=fff&size=80"
+                            alt="Company">
+                    </div>
+                    <div class="job-info">
+                        <h3>Ingénieur Cybersécurité - CDD</h3>
+                        <p class="company-name">
+                            <i class="fas fa-building"></i> CyberSec Solutions
+                        </p>
+                        <div class="job-meta">
+                            <span class="job-type cdd">
+                                <i class="fas fa-calendar-alt"></i> CDD
+                            </span>
+                            <span><i class="fas fa-map-marker-alt"></i> Sousse, Tunisie</span>
+                            <span><i class="fas fa-clock"></i> Publié il y a 1 semaine</span>
+                        </div>
+                    </div>
+                    <button class="bookmark-btn">
+                        <i class="far fa-bookmark"></i>
+                    </button>
+                </div>
+
+                <div class="job-description">
+                    <p>Nous cherchons un ingénieur en cybersécurité pour renforcer notre équipe.
+                        Vous serez responsable de la sécurisation des infrastructures et de la gestion des incidents.
+                    </p>
+                </div>
+
+                <div class="job-skills">
+                    <span class="skill-tag">Cybersécurité</span>
+                    <span class="skill-tag">Penetration Testing</span>
+                    <span class="skill-tag">Linux</span>
+                    <span class="skill-tag">Firewalls</span>
+                </div>
+
+                <div class="job-footer">
+                    <div class="job-salary">
+                        <i class="fas fa-money-bill-wave"></i>
+                        <span>Salaire: 3000-4000 TND/mois</span>
+                    </div>
+                    <button class="btn btn-primary btn-sm">
+                        <i class="fas fa-paper-plane"></i> Postuler
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

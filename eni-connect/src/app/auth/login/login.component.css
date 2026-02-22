@@ -1,0 +1,484 @@
+/* ==========================================
+   ENICAR CONNECT — Login Page
+   Dark Navy & Gold Premium Design
+   ========================================== */
+
+.login-wrapper {
+    display: flex;
+    min-height: 100vh;
+    width: 100%;
+    background: var(--bg-secondary);
+}
+
+/* ---- LEFT SIDEBAR ---- */
+.login-sidebar {
+    width: 44%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: var(--color-white);
+    padding: var(--space-16);
+    overflow: hidden;
+    background: linear-gradient(135deg, #0A1628 0%, #0D1F3C 50%, #112448 100%);
+}
+
+.background-overlay {
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(ellipse at 20% 50%, rgba(201, 168, 76, 0.12) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 20%, rgba(201, 168, 76, 0.06) 0%, transparent 50%);
+    z-index: 0;
+}
+
+/* Decorative circles */
+.login-sidebar::before {
+    content: '';
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    border-radius: 50%;
+    border: 1px solid rgba(201, 168, 76, 0.08);
+    bottom: -100px;
+    right: -100px;
+    z-index: 0;
+}
+
+.login-sidebar::after {
+    content: '';
+    position: absolute;
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    border: 1px solid rgba(201, 168, 76, 0.06);
+    top: 50px;
+    right: 50px;
+    z-index: 0;
+}
+
+.sidebar-content {
+    position: relative;
+    z-index: 10;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.brand-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+}
+
+.sidebar-logo {
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-md);
+    object-fit: contain;
+}
+
+.brand-header h2 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--color-white);
+    margin: 0;
+    letter-spacing: -0.02em;
+}
+
+.brand-header h2 span {
+    color: var(--color-accent);
+}
+
+/* Sidebar text */
+.sidebar-text {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.sidebar-text h1 {
+    font-size: 3.2rem;
+    font-weight: 800;
+    line-height: 1.08;
+    margin-bottom: var(--space-6);
+    color: var(--color-white);
+    letter-spacing: -0.04em;
+}
+
+.sidebar-text h1 .gold-text {
+    color: var(--color-accent);
+}
+
+.sidebar-text p {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.60);
+    max-width: 85%;
+    font-weight: 400;
+    line-height: 1.7;
+    margin-bottom: var(--space-8);
+}
+
+/* Stats badges */
+.sidebar-stats {
+    display: flex;
+    gap: var(--space-4);
+    flex-wrap: wrap;
+}
+
+.stat-badge {
+    background: rgba(201, 168, 76, 0.12);
+    border: 1px solid rgba(201, 168, 76, 0.25);
+    border-radius: var(--radius-lg);
+    padding: var(--space-3) var(--space-4);
+    text-align: center;
+}
+
+.stat-badge .stat-number {
+    display: block;
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--color-accent);
+    line-height: 1;
+    margin-bottom: 2px;
+}
+
+.stat-badge .stat-label {
+    font-size: 0.7rem;
+    color: rgba(255, 255, 255, 0.5);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.sidebar-footer p {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.30);
+    margin: 0;
+}
+
+/* ---- RIGHT FORM AREA ---- */
+.login-main {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-12);
+    background: var(--bg-primary);
+    position: relative;
+}
+
+/* subtle top-right glow */
+.login-main::before {
+    content: '';
+    position: absolute;
+    top: -80px;
+    right: -80px;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(201, 168, 76, 0.06) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+.login-form-container {
+    width: 100%;
+    max-width: 420px;
+    animation: fadeInUp 0.5s var(--ease-out) both;
+}
+
+.mobile-brand {
+    display: none;
+    text-align: center;
+    margin-bottom: var(--space-8);
+}
+
+.mobile-logo {
+    width: 64px;
+    border-radius: var(--radius-md);
+}
+
+/* Form header */
+.form-header {
+    margin-bottom: var(--space-8);
+}
+
+.form-header h3 {
+    font-size: 1.875rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: var(--space-2);
+    letter-spacing: -0.03em;
+}
+
+.subtitle {
+    color: var(--text-tertiary);
+    font-size: 0.9rem;
+    margin: 0;
+    font-weight: 400;
+}
+
+.domain-hint {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin-top: var(--space-3);
+    padding: var(--space-2) var(--space-3);
+    background: var(--color-accent-light);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-full);
+    font-size: 0.75rem;
+    color: var(--color-accent);
+    font-weight: 500;
+}
+
+/* Alert */
+.alert {
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-md);
+    font-size: 0.8125rem;
+    font-weight: 500;
+    margin-bottom: var(--space-5);
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+}
+
+.alert-danger {
+    background: rgba(248, 113, 113, 0.10);
+    color: var(--color-error);
+    border: 1px solid rgba(248, 113, 113, 0.25);
+}
+
+/* Form inputs */
+.login-form .form-group {
+    margin-bottom: var(--space-5);
+}
+
+.login-form .form-label {
+    display: block;
+    margin-bottom: var(--space-2);
+    font-weight: 500;
+    font-size: 0.8125rem;
+    color: var(--text-secondary);
+}
+
+.input-with-icon {
+    position: relative;
+}
+
+.input-with-icon i.field-icon {
+    position: absolute;
+    left: var(--space-4);
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-quaternary);
+    font-size: 0.875rem;
+    pointer-events: none;
+    transition: color var(--duration-fast) var(--ease-out);
+}
+
+.input-with-icon:focus-within i.field-icon {
+    color: var(--color-accent);
+}
+
+.input-with-icon .form-control {
+    padding-left: 2.75rem;
+    padding-right: var(--space-4);
+    height: 50px;
+    border: 1.5px solid var(--border-color);
+    border-radius: var(--radius-md);
+    font-size: 0.9375rem;
+    transition: all var(--duration-fast) var(--ease-out);
+    width: 100%;
+    font-family: var(--font-primary);
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--text-primary);
+}
+
+.input-with-icon .form-control:focus {
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 4px var(--color-accent-light);
+    background: rgba(255, 255, 255, 0.06);
+    outline: none;
+}
+
+.input-with-icon .form-control::placeholder {
+    color: var(--text-quaternary);
+}
+
+.toggle-pass {
+    position: absolute;
+    right: var(--space-4);
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--text-quaternary);
+    cursor: pointer;
+    padding: 0;
+    transition: color var(--duration-fast) var(--ease-out);
+}
+
+.toggle-pass:hover {
+    color: var(--color-accent);
+}
+
+/* Form options */
+.form-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-8);
+}
+
+.custom-checkbox {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-size: 0.8125rem;
+    color: var(--text-secondary);
+    gap: var(--space-2);
+}
+
+.custom-checkbox input {
+    display: none;
+}
+
+.checkmark {
+    width: 18px;
+    height: 18px;
+    border: 1.5px solid var(--border-color-strong);
+    border-radius: var(--radius-xs);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: all var(--duration-fast) var(--ease-out);
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.custom-checkbox input:checked+.checkmark {
+    background: var(--color-accent);
+    border-color: var(--color-accent);
+}
+
+.custom-checkbox input:checked+.checkmark::after {
+    content: '✓';
+    color: var(--color-navy-800);
+    font-size: 10px;
+    font-weight: 800;
+}
+
+.forgot-link {
+    font-size: 0.8125rem;
+    color: var(--color-accent);
+    font-weight: 500;
+    transition: color var(--duration-fast);
+}
+
+.forgot-link:hover {
+    color: var(--color-accent-hover);
+}
+
+/* Submit button */
+.btn-block {
+    width: 100%;
+}
+
+.btn-xl {
+    padding: 0.9rem;
+    font-size: 1rem;
+    font-weight: 700;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    width: 100%;
+    margin-bottom: var(--space-6);
+    letter-spacing: -0.01em;
+    background: linear-gradient(135deg, var(--color-gold-500), var(--color-gold-400));
+    color: var(--color-navy-800);
+    border: none;
+    cursor: pointer;
+    transition: all var(--duration-base) var(--ease-out);
+    box-shadow: 0 4px 20px rgba(201, 168, 76, 0.25);
+}
+
+.btn-xl:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 28px rgba(201, 168, 76, 0.4);
+    background: linear-gradient(135deg, var(--color-gold-400), var(--color-gold-500));
+}
+
+.btn-xl:active {
+    transform: translateY(0) scale(0.99);
+}
+
+/* Register prompt */
+.register-prompt {
+    text-align: center;
+    font-size: 0.875rem;
+    color: var(--text-tertiary);
+}
+
+.register-prompt p {
+    margin: 0;
+}
+
+.link-primary {
+    color: var(--color-accent);
+    font-weight: 600;
+}
+
+.link-primary:hover {
+    color: var(--color-accent-hover);
+}
+
+/* Divider */
+.divider {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    margin: var(--space-6) 0;
+    color: var(--text-quaternary);
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.divider::before,
+.divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border-color);
+}
+
+/* ---- RESPONSIVE ---- */
+@media (max-width: 991px) {
+    .login-sidebar {
+        display: none;
+    }
+
+    .mobile-brand {
+        display: block;
+    }
+
+    .login-main {
+        padding: var(--space-8);
+    }
+}
+
+@media (max-width: 480px) {
+    .login-main {
+        padding: var(--space-6);
+    }
+
+    .form-header h3 {
+        font-size: 1.6rem;
+    }
+}

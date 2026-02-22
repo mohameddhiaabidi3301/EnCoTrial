@@ -1,0 +1,180 @@
+<div class="groups-page">
+    <app-header></app-header>
+
+    <div class="page-container">
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1><i class="fas fa-users"></i> Groupes</h1>
+            <button class="btn btn-primary">
+                <i class="fas fa-plus"></i>
+                Créer un groupe
+            </button>
+        </div>
+
+        <!-- Filters -->
+        <div class="filters-bar card">
+            <div class="filter-tabs">
+                <button class="filter-tab active">Tous les groupes</button>
+                <button class="filter-tab">Mes groupes</button>
+                <button class="filter-tab">Suggestions</button>
+            </div>
+            <div class="filter-categories">
+                <button class="category-btn active">Tous</button>
+                <button class="category-btn">Filières</button>
+                <button class="category-btn">Promotions</button>
+                <button class="category-btn">Clubs</button>
+                <button class="category-btn">Projets</button>
+            </div>
+        </div>
+
+        <!-- Groups Grid -->
+        <div class="groups-grid">
+            <!-- Group Card 1 -->
+            <div class="card group-card">
+                <div class="group-cover">
+                    <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=400&h=200&fit=crop"
+                        alt="Group">
+                </div>
+                <div class="group-content">
+                    <h3>Génie Informatique 2026</h3>
+                    <p class="group-category">
+                        <i class="fas fa-tag"></i> Filière
+                    </p>
+                    <p class="group-description">
+                        Groupe officiel de la promotion 2026 de Génie Informatique
+                    </p>
+                    <div class="group-stats">
+                        <span><i class="fas fa-users"></i> 156 membres</span>
+                        <span><i class="fas fa-file-alt"></i> 42 publications</span>
+                    </div>
+                    <button class="btn btn-primary btn-sm">
+                        <i class="fas fa-check"></i> Membre
+                    </button>
+                    <button class="btn btn-outline-primary btn-sm" (click)="openChat('g1')" style="margin-left: 10px;">
+                        <i class="fas fa-comment-dots"></i> Discuter
+                    </button>
+                </div>
+            </div>
+
+            <!-- Group Card 2 -->
+            <div class="card group-card">
+                <div class="group-cover">
+                    <img src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=400&h=200&fit=crop"
+                        alt="Group">
+                </div>
+                <div class="group-content">
+                    <h3>Club Robotique ENI</h3>
+                    <p class="group-category">
+                        <i class="fas fa-tag"></i> Club
+                    </p>
+                    <p class="group-description">
+                        Passionnés de robotique et d'automatisation
+                    </p>
+                    <div class="group-stats">
+                        <span><i class="fas fa-users"></i> 89 membres</span>
+                        <span><i class="fas fa-file-alt"></i> 128 publications</span>
+                    </div>
+                    <button class="btn btn-outline btn-sm">
+                        <i class="fas fa-plus"></i> Rejoindre
+                    </button>
+                </div>
+            </div>
+
+            <!-- Group Card 3 -->
+            <div class="card group-card">
+                <div class="group-cover">
+                    <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=400&h=200&fit=crop"
+                        alt="Group">
+                </div>
+                <div class="group-content">
+                    <h3>Projet Smart City</h3>
+                    <p class="group-category">
+                        <i class="fas fa-tag"></i> Projet
+                    </p>
+                    <p class="group-description">
+                        Équipe de développement du projet Smart City
+                    </p>
+                    <div class="group-stats">
+                        <span><i class="fas fa-users"></i> 12 membres</span>
+                        <span><i class="fas fa-file-alt"></i> 67 publications</span>
+                    </div>
+                    <button class="btn btn-primary btn-sm">
+                        <i class="fas fa-check"></i> Membre
+                    </button>
+                </div>
+            </div>
+
+            <!-- Group Card 4 -->
+            <div class="card group-card">
+                <div class="group-cover">
+                    <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=400&h=200&fit=crop"
+                        alt="Group">
+                </div>
+                <div class="group-content">
+                    <h3>Club Entrepreneuriat</h3>
+                    <p class="group-category">
+                        <i class="fas fa-tag"></i> Club
+                    </p>
+                    <p class="group-description">
+                        Innovation, startups et entrepreneuriat étudiant
+                    </p>
+                    <div class="group-stats">
+                        <span><i class="fas fa-users"></i> 134 membres</span>
+                        <span><i class="fas fa-file-alt"></i> 95 publications</span>
+                    </div>
+                    <button class="btn btn-outline btn-sm">
+                        <i class="fas fa-plus"></i> Rejoindre
+                    </button>
+                </div>
+            </div>
+
+            <!-- Group Card 5 -->
+            <div class="card group-card">
+                <div class="group-cover">
+                    <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?w=400&h=200&fit=crop"
+                        alt="Group">
+                </div>
+                <div class="group-content">
+                    <h3>Mécatronique 2025</h3>
+                    <p class="group-category">
+                        <i class="fas fa-tag"></i> Filière
+                    </p>
+                    <p class="group-description">
+                        Groupe de la promotion 2025 de Mécatronique
+                    </p>
+                    <div class="group-stats">
+                        <span><i class="fas fa-users"></i> 98 membres</span>
+                        <span><i class="fas fa-file-alt"></i> 53 publications</span>
+                    </div>
+                    <button class="btn btn-outline btn-sm">
+                        <i class="fas fa-plus"></i> Rejoindre
+                    </button>
+                </div>
+            </div>
+
+            <!-- Group Card 6 -->
+            <div class="card group-card">
+                <div class="group-cover">
+                    <img src="https://images.unsplash.com/photo-1511632765486-a01980e01a18?w=400&h=200&fit=crop"
+                        alt="Group">
+                </div>
+                <div class="group-content">
+                    <h3>Club Culturel ENI</h3>
+                    <p class="group-category">
+                        <i class="fas fa-tag"></i> Club
+                    </p>
+                    <p class="group-description">
+                        Activités culturelles, artistiques et événements
+                    </p>
+                    <div class="group-stats">
+                        <span><i class="fas fa-users"></i> 201 membres</span>
+                        <span><i class="fas fa-file-alt"></i> 176 publications</span>
+                    </div>
+                    <button class="btn btn-primary btn-sm">
+                        <i class="fas fa-check"></i> Membre
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ENI Connect - Démonstration</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Poppins:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="src/styles.css">
+    <link rel="stylesheet" href="src/app/auth/login/login.component.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        .demo-container {
+            display: flex;
+            height: 100vh;
+        }
+
+        .demo-sidebar {
+            width: 280px;
+            background: linear-gradient(135deg, #0078D4, #004578);
+            color: white;
+            padding: 2rem 1rem;
+            overflow-y: auto;
+        }
+
+        .demo-logo {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .demo-logo img {
+            max-width: 200px;
+            background: white;
+            padding: 1rem;
+            border-radius: 1rem;
+        }
+
+        .demo-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+
+        .demo-menu {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .demo-menu-item {
+            margin-bottom: 0.5rem;
+        }
+
+        .demo-menu-link {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            border-radius: 0.5rem;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .demo-menu-link:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        .demo-menu-link.active {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .demo-menu-link i {
+            width: 20px;
+            text-align: center;
+        }
+
+        .demo-content {
+            flex: 1;
+            overflow-y: auto;
+            background: #F5F5F5;
+        }
+
+        .template-view {
+            display: none;
+        }
+
+        .template-view.active {
+            display: block;
+        }
+
+        .demo-info {
+            background: white;
+            padding: 3rem;
+            max-width: 900px;
+            margin: 2rem auto;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .demo-info h1 {
+            color: #0078D4;
+            margin-bottom: 1rem;
+        }
+
+        .demo-info h2 {
+            color: #004578;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .demo-info ul {
+            line-height: 2;
+        }
+
+        .team-box {
+            background: #F5F5F5;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            margin-top: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .demo-container {
+                flex-direction: column;
+            }
+
+            .demo-sidebar {
+                width: 100%;
+                height: auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="demo-container">
+        <!-- Sidebar -->
+        <div class="demo-sidebar">
+            <div class="demo-logo">
+                <img src="src/assets/images/enicar-connect-logo.jpg" alt="ENI Connect">
+            </div>
+            <div class="demo-title">
+                <i class="fas fa-laptop-code"></i> Démonstration Templates
+            </div>
+            <ul class="demo-menu">
+                <li class="demo-menu-item">
+                    <a class="demo-menu-link active" onclick="showView('info')">
+                        <i class="fas fa-info-circle"></i>
+                        <span>Introduction</span>
+                    </a>
+                </li>
+                <li class="demo-menu-item">
+                    <a class="demo-menu-link" onclick="showView('login')">
+                        <i class="fas fa-sign-in-alt"></i>
+                        <span>Page Login</span>
+                    </a>
+                </li>
+                <li class="demo-menu-item">
+                    <a class="demo-menu-link" onclick="showView('register')">
+                        <i class="fas fa-user-plus"></i>
+                        <span>Page Register</span>
+                    </a>
+                </li>
+                <li class="demo-menu-item">
+                    <a class="demo-menu-link" onclick="showView('header')">
+                        <i class="fas fa-bars"></i>
+                        <span>Header Component</span>
+                    </a>
+                </li>
+                <li class="demo-menu-item">
+                    <a class="demo-menu-link" onclick="showView('feed')">
+                        <i class="fas fa-newspaper"></i>
+                        <span>Feed Social</span>
+                    </a>
+                </li>
+                <li class="demo-menu-item">
+                    <a class="demo-menu-link" onclick="showView('groups')">
+                        <i class="fas fa-users"></i>
+                        <span>Groupes</span>
+                    </a>
+                </li>
+                <li class="demo-menu-item">
+                    <a class="demo-menu-link" onclick="showView('events')">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>Événements</span>
+                    </a>
+                </li>
+                <li class="demo-menu-item">
+                    <a class="demo-menu-link" onclick="showView('jobs')">
+                        <i class="fas fa-briefcase"></i>
+                        <span>Emplois</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Content -->
+        <div class="demo-content">
+            <!-- Info View -->
+            <div id="info" class="template-view active">
+                <div class="demo-info">
+                    <h1><i class="fas fa-rocket"></i> ENI Connect - Plateforme Communautaire</h1>
+                    <p style="font-size: 1.1rem; color: #666;">
+                        Bienvenue dans la démonstration de la plateforme web communautaire ENI Carthage !
+                    </p>
+
+                    <h2><i class="fas fa-check-circle"></i> Templates Créés</h2>
+                    <ul>
+                        <li><strong>Login</strong> - Page de connexion avec design glassmorphism</li>
+                        <li><strong>Register</strong> - Page d'inscription avec sélection de type d'utilisateur</li>
+                        <li><strong>Header</strong> - En-tête avec navigation, notifications et menu profil</li>
+                        <li><strong>Feed</strong> - Fil d'actualités avec création de posts et interactions</li>
+                        <li><strong>Groupes</strong> - Page de groupes avec filtres et grille</li>
+                        <li><strong>Événements</strong> - Calendrier d'événements avec participants</li>
+                        <li><strong>Emplois</strong> - Plateforme d'offres d'emploi et stages</li>
+                    </ul>
+
+                    <h2><i class="fas fa-palette"></i> Caractéristiques Design</h2>
+                    <ul>
+                        <li>Palette de couleurs cohérente avec ENI Carthage (#0078D4)</li>
+                        <li>Design moderne avec glassmorphism et animations fluides</li>
+                        <li>100% responsive (mobile, tablette, desktop)</li>
+                        <li>Logos ENI Connect et ENI Carthage intégrés</li>
+                        <li>Font Awesome icons et Google Fonts</li>
+                    </ul>
+
+                    <h2><i class="fas fa-code"></i> Technologies</h2>
+                    <ul>
+                        <li>Angular 17</li>
+                        <li>TypeScript</li>
+                        <li>CSS3 avec variables</li>
+                        <li>HTML5 sémantique</li>
+                    </ul>
+
+                    <div class="team-box">
+                        <h3 style="color: #0078D4; margin-bottom: 1rem;">
+                            <i class="fas fa-users"></i> Équipe de Développement
+                        </h3>
+                        <p><strong>Mohamed Jerbi</strong></p>
+                        <p><strong>Mohamed Babou</strong></p>
+                        <p><strong>Mohamed Dhia Al Islam Abidi</strong></p>
+                        <p style="margin-top: 1rem; font-weight: 600;">Classe : 2ème Info Groupe C</p>
+                        <p style="margin-top: 1rem;">
+                            <img src="src/assets/images/eni-carthage-logo.jpg" alt="ENI Carthage"
+                                style="max-width: 200px;">
+                        </p>
+                    </div>
+
+                    <div
+                        style="margin-top: 2rem; padding: 1.5rem; background: #E3F2FD; border-left: 4px solid #0078D4; border-radius: 0.5rem;">
+                        <p style="margin: 0; color: #004578;">
+                            <i class="fas fa-arrow-left"></i>
+                            <strong>Utilisez le menu à gauche pour naviguer entre les différents templates</strong>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Login View -->
+            <div id="login" class="template-view">
+                <iframe src="src/app/auth/login/login.component.html"
+                    style="width: 100%; height: 100vh; border: none;"></iframe>
+            </div>
+
+            <!-- Register View -->
+            <div id="register" class="template-view">
+                <iframe src="src/app/auth/register/register.component.html"
+                    style="width: 100%; height: 100vh; border: none;"></iframe>
+            </div>
+
+            <!-- Header View -->
+            <div id="header" class="template-view">
+                <iframe src="src/app/shared/header/header.component.html"
+                    style="width: 100%; height: 100vh; border: none;"></iframe>
+            </div>
+
+            <!-- Feed View -->
+            <div id="feed" class="template-view">
+                <iframe src="src/app/social/feed/feed.component.html"
+                    style="width: 100%; height: 100vh; border: none;"></iframe>
+            </div>
+
+            <!-- Groups View -->
+            <div id="groups" class="template-view">
+                <iframe src="src/app/social/groups/groups.component.html"
+                    style="width: 100%; height: 100vh; border: none;"></iframe>
+            </div>
+
+            <!-- Events View -->
+            <div id="events" class="template-view">
+                <iframe src="src/app/social/events/events.component.html"
+                    style="width: 100%; height: 100vh; border: none;"></iframe>
+            </div>
+
+            <!-- Jobs View -->
+            <div id="jobs" class="template-view">
+                <iframe src="src/app/professional/jobs/jobs.component.html"
+                    style="width: 100%; height: 100vh; border: none;"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showView(viewId) {
+            // Hide all views
+            document.querySelectorAll('.template-view').forEach(view => {
+                view.classList.remove('active');
+            });
+
+            // Remove active from all menu links
+            document.querySelectorAll('.demo-menu-link').forEach(link => {
+                link.classList.remove('active');
+            });
+
+            // Show selected view
+            document.getElementById(viewId).classList.add('active');
+
+            // Add active to clicked link
+            event.target.closest('.demo-menu-link').classList.add('active');
+        }
+    </script>
+</body>
+
+</html>

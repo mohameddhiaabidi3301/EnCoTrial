@@ -1,0 +1,42 @@
+# ── Maven / Spring Boot ──
+target/
+.mvn/
+!.mvn/wrapper/maven-wrapper.jar
+!.mvn/wrapper/maven-wrapper.properties
+
+# ── Editor / IDE ──
+.idea/
+.vscode/
+*.iml
+*.iws
+*.ipr
+.project
+.classpath
+.settings/
+
+# ── OS ──
+.DS_Store
+Thumbs.db
+
+# ── Logs ──
+logs/
+*.log
+spring.log
+
+# ── Build ──
+*.class
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# ── Local env ──
+.env
+.env.local
+application-local.properties
+application-local.yml
+
+# ── Test output ──
+surefire-reports/
