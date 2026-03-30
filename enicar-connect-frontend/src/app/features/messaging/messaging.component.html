@@ -1,81 +1,95 @@
-<app-particles-bg />
 <app-navbar />
 <app-toast />
 
-<div class="workspace">
-    <!-- Conversation Panel -->
-    <div class="conv-panel">
-        <div class="conv-header">
-            <h3>Messages</h3>
-            <button class="compose-btn"><i class="fas fa-edit"></i></button>
+<div class="chat-container">
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h2>Messagerie</h2>
+            <button class="new-msg-btn"><i class="fas fa-edit"></i></button>
         </div>
-        <div class="conv-search">
-            <div class="conv-search-inner">
-                <i class="fas fa-search"></i>
-                <input type="text" placeholder="Rechercher...">
-            </div>
+
+        <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" placeholder="Rechercher..." [(ngModel)]="searchQuery" (input)="filterUsers()">
         </div>
-        <div class="conv-section-lbl">Récents</div>
-        <div class="conv-list">
-            <div class="conv-item" *ngFor="let c of conversations" [class.active]="activeConv?.id === c.id"
+
+        <div class="users-list">
+            <div class="user-item" *ngFor="let c of filteredConversations" [class.active]="activeConv?.id === c.id"
                 (click)="selectConv(c)">
-                <div class="conv-av">{{ c.initials }}<span class="online-dot" *ngIf="c.online"></span></div>
-                <div class="conv-body">
-                    <h4>{{ c.name }}</h4>
-                    <p>{{ c.preview }}</p>
+                <div class="user-avatar">
+                    {{ c.initials }}
+                    <span class="status-dot"></span>
                 </div>
-                <div class="conv-aside">
-                    <span class="conv-time">{{ c.time }}</span>
-                    <span class="unread-badge" *ngIf="c.unread">{{ c.unread }}</span>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Chat Panel -->
-    <div class="chat-panel" *ngIf="activeConv; else emptyState">
-        <div class="chat-header">
-            <div class="conv-av">{{ activeConv.initials }}<span class="online-dot" *ngIf="activeConv.online"></span>
-            </div>
-            <div>
-                <h4>{{ activeConv.name }}</h4>
-                <div class="chat-status" *ngIf="activeConv.online">En ligne</div>
-            </div>
-            <div class="chat-header-right">
-                <button class="icon-btn"><i class="fas fa-info-circle"></i></button>
-            </div>
-        </div>
-
-        <div class="messages" #messagesContainer>
-            <div class="date-sep">Aujourd'hui</div>
-            <div class="msg-row" *ngFor="let m of activeMessages" [class.received]="m.senderId !== myId"
-                [class.sent]="m.senderId === myId">
-                <div class="bubble">{{ m.content }}</div>
-                <span class="msg-time">{{ m.timestamp | date:'shortTime' }}</span>
-            </div>
-            <div class="typing" *ngIf="typing">
-                <div class="conv-av" style="width:34px;height:34px;font-size:.7rem">{{ activeConv.initials }}</div>
-                <div class="typing-bubble">
-                    <div class="dot"></div>
-                    <div class="dot"></div>
-                    <div class="dot"></div>
+                <div class="user-info">
+                    <h4 class="user-name">{{ c.name }}</h4>
+                    <p class="user-preview">{{ c.preview }}</p>
                 </div>
             </div>
-        </div>
 
-        <div class="chat-input-bar">
-            <i class="fas fa-paperclip attach-btn"></i>
-            <i class="far fa-smile emoji-btn"></i>
-            <input type="text" class="msg-input" [(ngModel)]="inputText" placeholder="Écrire un message..."
-                (keyup.enter)="sendMessage()">
-            <button class="send-btn" (click)="sendMessage()"><i class="fas fa-paper-plane"></i></button>
+            <div class="empty-list" *ngIf="filteredConversations.length === 0">
+                Aucun utilisateur trouvé.
+            </div>
         </div>
-    </div>
+    </aside>
 
-    <ng-template #emptyState>
-        <div class="chat-panel empty-state">
-            <div class="empty-icon"><i class="fas fa-comments"></i></div>
-            <p>Sélectionnez une conversation</p>
-        </div>
-    </ng-template>
+    <main class="chat-area">
+        <ng-container *ngIf="activeConv; else emptyState">
+            <div class="chat-header">
+                <div class="user-avatar">
+                    {{ activeConv.initials }}
+                    <span class="status-dot"></span>
+                </div>
+                <div class="header-info">
+                    <h3>{{ activeConv.name }}</h3>
+                    <span class="status-text">En ligne</span>
+                </div>
+                <div class="header-actions">
+                    <button><i class="fas fa-phone-alt"></i></button>
+                    <button><i class="fas fa-video"></i></button>
+                    <button><i class="fas fa-info-circle"></i></button>
+                </div>
+            </div>
+
+            <div class="messages-wrapper" #messagesContainer>
+                <div class="messages-content">
+                    <div class="message-bubble-wrapper" *ngFor="let m of activeMessages"
+                        [class.me]="m.senderId === myId" [class.them]="m.senderId !== myId">
+
+                        <div class="bubble-avatar" *ngIf="m.senderId !== myId">
+                            {{ activeConv.initials }}
+                        </div>
+
+                        <div class="message-bubble">
+                            <p class="message-text">{{ m.content }}</p>
+                            <span class="message-time">{{ m.timestamp | date:'shortTime' }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chat-input-area">
+                <button class="icon-btn"><i class="fas fa-paperclip"></i></button>
+                <button class="icon-btn"><i class="far fa-smile"></i></button>
+
+                <div class="input-wrapper">
+                    <input type="text" [(ngModel)]="inputText" placeholder="Entrez votre message ici..."
+                        (keyup.enter)="sendMessage()">
+                </div>
+
+                <button class="send-btn" [disabled]="!inputText.trim()" (click)="sendMessage()">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </ng-container>
+
+        <ng-template #emptyState>
+            <div class="welcome-state">
+                <div class="welcome-icon">
+                    <i class="far fa-comments"></i>
+                </div>
+                <h2>Vos messages</h2>
+                <p>Sélectionnez un contact dans la liste pour démarrer une conversation privée.</p>
+            </div>
+        </ng-template>
+    </main>
 </div>

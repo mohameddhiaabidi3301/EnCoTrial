@@ -23,6 +23,11 @@ public class UserController {
         return ResponseEntity.ok(userService.findAll());
     }
 
+    @GetMapping("/directory")
+    public ResponseEntity<List<UserDTO>> getDirectory() {
+        return ResponseEntity.ok(userService.findAll());
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<UserDTO> findById(@PathVariable Long id) {
         return ResponseEntity.ok(userService.findById(id));
