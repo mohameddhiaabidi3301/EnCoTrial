@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ENICAR Connect — Offres & Opportunités</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="theme-manager.js"></script>
+    <style>
+        :root {
+            --gold: #C9A84C;
+            --gold-light: #E8C96A;
+            --bg: #050D1A;
+            --bg-card: #0D1F3C;
+            --bg-inner: rgba(255, 255, 255, .045);
+            --navy-nav: #0A1628;
+            --text: #FFF;
+            --text-2: rgba(255, 255, 255, .72);
+            --text-3: rgba(255, 255, 255, .40);
+            --border: rgba(201, 168, 76, .15);
+            --search-bg: rgba(255, 255, 255, .06);
+            --nav-h: 68px;
+            --shadow: 0 8px 32px rgba(0, 0, 0, .4);
+        }
+
+        [data-theme="light"] {
+            --bg: #F5F7FA;
+            --bg-card: #FFFFFF;
+            --bg-inner: rgba(0, 0, 0, .05);
+            --navy-nav: #FFFFFF;
+            --text: #111827;
+            --text-2: #374151;
+            --text-3: #9CA3AF;
+            --border: rgba(0, 0, 0, .09);
+            --search-bg: rgba(0, 0, 0, .05);
+            --shadow: 0 2px 12px rgba(0, 0, 0, .07);
+        }
+
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            overflow-x: hidden;
+            transition: background .4s, color .4s;
+        }
+
+        #particles-canvas {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .orbs {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            animation: orbPulse 8s ease-in-out infinite alternate;
+        }
+
+        [data-theme="light"] .orb {
+            opacity: .04;
+        }
+
+        .orb-1 {
+            width: 520px;
+            height: 520px;
+            background: radial-gradient(circle, rgba(201, 168, 76, .35), transparent);
+            top: -15%;
+            left: -10%;
+            animation-duration: 13s;
+        }
+
+        .orb-2 {
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(13, 31, 60, .8), transparent);
+            bottom: -10%;
+            right: -8%;
+            animation-duration: 9s;
+        }
+
+        .orb-3 {
+            width: 260px;
+            height: 260px;
+            background: radial-gradient(circle, rgba(232, 201, 106, .25), transparent);
+            top: 35%;
+            right: 25%;
+            animation-duration: 17s;
+        }
+
+        @keyframes orbPulse {
+            0% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            50% {
+                transform: translate(20px, 15px) scale(1.08);
+            }
+
+            100% {
+                transform: translate(-10px, 25px) scale(.95);
+            }
+        }
+
+        .navbar {
+            height: var(--nav-h);
+            background: var(--navy-nav);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 3rem;
+            position: sticky;
+            top: 0;
+            z-index: 900;
+            backdrop-filter: blur(20px);
+            transition: background .4s, border-color .4s;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: .75rem;
+            text-decoration: none;
+        }
+
+        .brand-logo {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            border: 2px solid var(--gold);
+            overflow: hidden;
+        }
+
+        .brand-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .brand-text .eni {
+            color: var(--gold);
+            font-weight: 800;
+            font-size: 1.1rem;
+            letter-spacing: -.5px;
+        }
+
+        .brand-text .conn {
+            color: var(--text);
+            font-weight: 400;
+            font-size: .95rem;
+            opacity: .8;
+            margin-left: .3rem;
+            transition: color .4s;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: .4rem;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-2);
+            text-decoration: none;
+            width: 70px;
+            height: 54px;
+            border-radius: 12px;
+            gap: 3px;
+            transition: all .2s;
+        }
+
+        .nav-item i {
+            font-size: 1.15rem;
+        }
+
+        .nav-item span {
+            font-size: .6rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: .3px;
+        }
+
+        .nav-item:hover,
+        .nav-item.active {
+            color: var(--gold-light);
+            background: rgba(201, 168, 76, .09);
+        }
+
+        .nav-item.logout:hover {
+            color: #f87171;
+            background: rgba(248, 113, 113, .09);
+        }
+
+        .theme-btn {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            border: 1px solid var(--border);
+            background: var(--bg-inner);
+            color: var(--gold);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all .25s;
+            flex-shrink: 0;
+        }
+
+        .theme-btn:hover {
+            background: rgba(201, 168, 76, .15);
+            transform: rotate(20deg);
+        }
+
+        .page-wrap {
+            position: relative;
+            z-index: 2;
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 1.5rem 2rem;
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 1.5rem;
+            align-items: start;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 1.5rem;
+            margin-bottom: 1.25rem;
+            box-shadow: var(--shadow);
+            transition: background .4s, border-color .4s;
+        }
+
+        .filter-sidebar {
+            position: sticky;
+            top: calc(var(--nav-h) + 1.5rem);
+        }
+
+        .sec-label {
+            font-size: .68rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-3);
+            margin-bottom: .9rem;
+            display: flex;
+            align-items: center;
+            gap: .4rem;
+        }
+
+        .filter-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .filter-option {
+            display: flex;
+            align-items: center;
+            gap: .75rem;
+            padding: .45rem 0;
+            color: var(--text-2);
+            cursor: pointer;
+            transition: .2s;
+            font-size: .875rem;
+        }
+
+        .filter-option:hover {
+            color: var(--gold-light);
+        }
+
+        .filter-option input {
+            accent-color: var(--gold);
+        }
+
+        .jobs-header {
+            margin-bottom: 1.5rem;
+        }
+
+        .jobs-header h1 {
+            font-size: 1.75rem;
+            font-weight: 800;
+            margin-bottom: .3rem;
+            background: linear-gradient(90deg, var(--gold), var(--gold-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .jobs-header p {
+            color: var(--text-2);
+            font-size: .9rem;
+        }
+
+        .job-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            display: flex;
+            gap: 1.25rem;
+            box-shadow: var(--shadow);
+            transition: all .3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .job-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, transparent 0%, rgba(201, 168, 76, .04) 100%);
+            opacity: 0;
+            transition: opacity .3s;
+            pointer-events: none;
+        }
+
+        .job-card:hover {
+            border-color: var(--gold);
+            transform: translateY(-4px);
+            box-shadow: 0 16px 48px rgba(0, 0, 0, .3);
+        }
+
+        .job-card:hover::before {
+            opacity: 1;
+        }
+
+        [data-theme="light"] .job-card:hover {
+            box-shadow: 0 8px 24px rgba(0, 0, 0, .1);
+        }
+
+        .company-logo {
+            width: 62px;
+            height: 62px;
+            border-radius: 14px;
+            background: var(--bg-inner);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--gold);
+            flex-shrink: 0;
+            transition: .3s;
+        }
+
+        .job-card:hover .company-logo {
+            border-color: var(--gold);
+            box-shadow: 0 0 14px rgba(201, 168, 76, .2);
+        }
+
+        .job-info {
+            flex: 1;
+        }
+
+        .job-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: .5rem;
+        }
+
+        .job-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            margin-bottom: 3px;
+            color: var(--text);
+        }
+
+        .company-name {
+            color: var(--gold);
+            font-size: .875rem;
+            font-weight: 500;
+        }
+
+        .job-meta {
+            display: flex;
+            gap: 1rem;
+            font-size: .78rem;
+            color: var(--text-3);
+            margin-bottom: .9rem;
+        }
+
+        .job-meta i {
+            color: var(--gold);
+            opacity: .6;
+        }
+
+        .job-tags {
+            display: flex;
+            gap: .5rem;
+            flex-wrap: wrap;
+        }
+
+        .job-tag {
+            background: rgba(201, 168, 76, .1);
+            color: var(--gold-light);
+            padding: 3px 12px;
+            border-radius: 20px;
+            font-size: .72rem;
+            font-weight: 600;
+            border: 1px solid rgba(201, 168, 76, .2);
+            transition: .2s;
+        }
+
+        .btn-apply {
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            color: #050D1A;
+            border: none;
+            padding: .6rem 1.35rem;
+            border-radius: 20px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: .25s;
+            font-family: 'Inter', sans-serif;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .btn-apply:hover {
+            transform: scale(1.06);
+            filter: brightness(1.08);
+            box-shadow: 0 6px 18px rgba(201, 168, 76, .3);
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="particles-canvas"></canvas>
+    <div class="orbs">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+    <nav class="navbar">
+        <a href="social_feed.html" class="nav-brand">
+            <div class="brand-logo"><img src="hannibal.png" alt="ENICAR"></div>
+            <div class="brand-text"><span class="eni">ENICAR</span><span class="conn">Connect</span></div>
+        </a>
+        <div class="nav-actions">
+            <a href="social_feed.html" class="nav-item"><i class="fas fa-home"></i><span>Accueil</span></a>
+            <a href="messaging.html" class="nav-item"><i class="fas fa-comment-alt"></i><span>Messages</span></a>
+            <a href="jobs.html" class="nav-item active"><i class="fas fa-briefcase"></i><span>Offres</span></a>
+            <a href="resources.html" class="nav-item"><i class="fas fa-file-alt"></i><span>Documents</span></a>
+            <a href="groups.html" class="nav-item"><i class="fas fa-users"></i><span>Groupes</span></a>
+            <a href="profile.html" class="nav-item"><i class="fas fa-user-circle"></i><span>Profil</span></a>
+            <button class="theme-btn" onclick="toggleTheme()"><i class="theme-toggle-icon fas fa-sun"></i></button>
+            <a href="login.html" class="nav-item logout"><i class="fas fa-sign-out-alt"></i><span>Quitter</span></a>
+        </div>
+    </nav>
+    <div class="page-wrap">
+        <aside class="filter-sidebar">
+            <div class="card">
+                <div class="filter-section">
+                    <div class="sec-label"><i class="fas fa-filter"></i> Type d'offre</div>
+                    <label class="filter-option"><input type="checkbox" checked> Stage PFE</label>
+                    <label class="filter-option"><input type="checkbox"> Stage Été</label>
+                    <label class="filter-option"><input type="checkbox"> Premier Emploi</label>
+                    <label class="filter-option"><input type="checkbox"> Alternance</label>
+                </div>
+                <div class="filter-section">
+                    <div class="sec-label"><i class="fas fa-laptop-code"></i> Domaines</div>
+                    <label class="filter-option"><input type="checkbox" checked> Développement Web</label>
+                    <label class="filter-option"><input type="checkbox"> IA & Data Science</label>
+                    <label class="filter-option"><input type="checkbox"> Cybersécurité</label>
+                    <label class="filter-option"><input type="checkbox"> Réseaux & Systèmes</label>
+                </div>
+            </div>
+        </aside>
+        <main>
+            <div class="jobs-header">
+                <h1>Offres pour vous</h1>
+                <p>Basé sur votre profil en Génie Informatique</p>
+            </div>
+            <div class="job-card">
+                <div class="company-logo"><i class="fab fa-google"></i></div>
+                <div class="job-info">
+                    <div class="job-top">
+                        <div>
+                            <div class="job-title">Stage PFE — Cloud Security Engineer</div>
+                            <div class="company-name">Google Cloud (Tunis Center)</div>
+                        </div>
+                        <button class="btn-apply">Postuler</button>
+                    </div>
+                    <div class="job-meta"><span><i class="fas fa-map-marker-alt"></i> Berges du Lac</span><span><i
+                                class="fas fa-calendar-alt"></i> Hier</span><span><i class="fas fa-clock"></i> 6
+                            mois</span></div>
+                    <div class="job-tags"><span class="job-tag">Cloud</span><span class="job-tag">Sécurité</span><span
+                            class="job-tag">Rémunéré</span></div>
+                </div>
+            </div>
+            <div class="job-card">
+                <div class="company-logo"><i class="fab fa-microsoft"></i></div>
+                <div class="job-info">
+                    <div class="job-top">
+                        <div>
+                            <div class="job-title">Fullstack Developer — Angular / Node.js</div>
+                            <div class="company-name">Microsoft MEA</div>
+                        </div>
+                        <button class="btn-apply">Postuler</button>
+                    </div>
+                    <div class="job-meta"><span><i class="fas fa-map-marker-alt"></i> Hybride</span><span><i
+                                class="fas fa-calendar-alt"></i> Il y a 3 jours</span><span><i class="fas fa-clock"></i>
+                            PFE</span></div>
+                    <div class="job-tags"><span class="job-tag">JS/TS</span><span class="job-tag">Angular</span><span
+                            class="job-tag">Innovation</span></div>
+                </div>
+            </div>
+            <div class="job-card">
+                <div class="company-logo"><i class="fas fa-infinity"></i></div>
+                <div class="job-info">
+                    <div class="job-top">
+                        <div>
+                            <div class="job-title">Ingénieur DevSecOps</div>
+                            <div class="company-name">Carthage Solutions</div>
+                        </div>
+                        <button class="btn-apply">Postuler</button>
+                    </div>
+                    <div class="job-meta"><span><i class="fas fa-map-marker-alt"></i> La Marsa</span><span><i
+                                class="fas fa-calendar-alt"></i> Il y a 1 semaine</span><span><i
+                                class="fas fa-briefcase"></i> CDI</span></div>
+                    <div class="job-tags"><span class="job-tag">Docker</span><span class="job-tag">DevOps</span><span
+                            class="job-tag">CI/CD</span></div>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+
+</html>

@@ -6,7 +6,7 @@ import { AuthService } from './auth.service';
 
 @Injectable({ providedIn: 'root' })
 export class PostService {
-    private readonly API = 'http://localhost:8081/api/posts';
+    private readonly API = 'http://localhost:8081/api';
     private http = inject(HttpClient);
     private auth = inject(AuthService);
 
