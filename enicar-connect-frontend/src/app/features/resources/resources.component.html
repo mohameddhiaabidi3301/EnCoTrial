@@ -1,0 +1,110 @@
+<app-particles-bg /><app-navbar /><app-toast />
+
+<!-- Upload Modal -->
+<div class="modal-overlay" *ngIf="showModal" (click)="closeModal()">
+    <div class="modal" (click)="$event.stopPropagation()">
+        <div class="modal-header">
+            <h3>Partager une ressource</h3>
+            <button class="modal-close" (click)="closeModal()"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="modal-body">
+            <div class="drop-zone" (click)="fileInput.click()">
+                <i class="fas fa-cloud-upload-alt"></i>
+                <p>Cliquez pour choisir un fichier</p>
+                <span>PDF, DOCX, PPTX — Max 50 MB</span>
+                <input #fileInput type="file" style="display:none" (change)="onFileChange($event)">
+            </div>
+            <div class="selected-file" *ngIf="form.title">
+                <i class="fas fa-paperclip"></i> {{ form.title }}
+            </div>
+            <div class="form-group">
+                <label>Titre *</label>
+                <input type="text" [(ngModel)]="form.title" placeholder="Ex: Cours Algo — Arbres binaires">
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Catégorie</label>
+                    <select [(ngModel)]="form.category">
+                        <option value="Cours">Cours</option>
+                        <option value="TD / TP">TD / TP</option>
+                        <option value="Examens">Examens</option>
+                        <option value="PFE">PFE</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Auteur</label>
+                    <input type="text" [(ngModel)]="form.author" placeholder="Votre nom">
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn-cancel" (click)="closeModal()">Annuler</button>
+            <button class="btn-submit" [disabled]="!form.title?.trim()" (click)="upload()">
+                <i class="fas fa-upload"></i> Publier
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Delete confirm -->
+<div class="modal-overlay" *ngIf="deleteId !== null" (click)="deleteId=null">
+    <div class="modal confirm-modal" (click)="$event.stopPropagation()">
+        <div class="confirm-icon"><i class="fas fa-trash"></i></div>
+        <h3>Supprimer la ressource ?</h3>
+        <p>Cette action est irréversible.</p>
+        <div class="confirm-actions">
+            <button class="btn-cancel" (click)="deleteId=null">Annuler</button>
+            <button class="btn-delete" (click)="confirmDelete()">Supprimer</button>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="page-header">
+        <div>
+            <h1 class="page-title">Ressources</h1>
+            <p class="page-sub">Tous les documents partagés par la communauté ENICAR</p>
+        </div>
+        <button class="btn-create" (click)="openUpload()"><i class="fas fa-cloud-upload-alt"></i> Partager un
+            document</button>
+    </div>
+
+    <div class="filter-chips">
+        <button class="chip" [class.active]="activeCategory==='Tous'" (click)="activeCategory='Tous'">
+            Tous ({{ resources.length }})
+        </button>
+        <button class="chip" *ngFor="let c of categories" [class.active]="activeCategory===c"
+            (click)="activeCategory=c">
+            {{ c }} ({{ countByCategory(c) }})
+        </button>
+    </div>
+
+    <div class="resources-grid">
+        <div class="resource-card" *ngFor="let r of filteredResources(); let i=index"
+            [style.animation-delay]="i*0.06+'s'">
+            <div class="res-icon-wrap"><i [class]="r.icon"></i></div>
+            <div class="res-content">
+                <h3>{{ r.title }}</h3>
+                <div class="res-meta">
+                    <span><i class="fas fa-user"></i> {{ r.author }}</span>
+                    <span><i class="fas fa-calendar"></i> {{ r.date }}</span>
+                    <span><i class="fas fa-weight"></i> {{ r.size }}</span>
+                </div>
+                <span class="res-category">{{ r.category }}</span>
+            </div>
+            <div class="res-actions">
+                <button class="res-btn download" (click)="download(r)" title="Télécharger"><i
+                        class="fas fa-download"></i></button>
+                <!-- Delete only for owner -->
+                <button class="res-btn delete" *ngIf="r.isOwner" (click)="deleteId=r.id" title="Supprimer"><i
+                        class="fas fa-trash"></i></button>
+            </div>
+            <div class="shimmer-line"></div>
+        </div>
+    </div>
+
+    <div class="empty-res" *ngIf="filteredResources().length === 0">
+        <i class="fas fa-folder-open"></i>
+        <p>Aucune ressource dans cette catégorie.</p>
+    </div>
+</div>

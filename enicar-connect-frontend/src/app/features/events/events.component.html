@@ -1,0 +1,135 @@
+<app-particles-bg /><app-navbar /><app-toast />
+
+<!-- Create/Edit Modal -->
+<div class="modal-overlay" *ngIf="showModal" (click)="closeModal()">
+    <div class="modal" (click)="$event.stopPropagation()">
+        <div class="modal-header">
+            <h3>{{ editingId ? "Modifier l'évènement" : 'Nouvel évènement' }}</h3>
+            <button class="modal-close" (click)="closeModal()"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="modal-body">
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Titre *</label>
+                    <input type="text" [(ngModel)]="form.title" placeholder="Titre de l'évènement">
+                </div>
+                <div class="form-group">
+                    <label>Catégorie *</label>
+                    <select [(ngModel)]="form.category">
+                        <option *ngFor="let c of categories" [value]="c">{{ c }}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Date *</label>
+                    <input type="date" [(ngModel)]="form.date">
+                </div>
+                <div class="form-group">
+                    <label>Heure *</label>
+                    <input type="time" [(ngModel)]="form.time">
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Lieu *</label>
+                <input type="text" [(ngModel)]="form.location" placeholder="Ex: Amphithéâtre A, Campus ENI">
+            </div>
+            <div class="form-group">
+                <label>Description</label>
+                <textarea [(ngModel)]="form.description" placeholder="Décrivez l'évènement..." rows="3"></textarea>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Organisateur</label>
+                    <input type="text" [(ngModel)]="form.organizer" placeholder="Nom de l'organisateur">
+                </div>
+                <div class="form-group">
+                    <label>Capacité max</label>
+                    <input type="number" [(ngModel)]="form.maxCapacity" placeholder="Sans limite si vide">
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Couleur de bannière</label>
+                <div class="color-swatches">
+                    <div class="swatch" *ngFor="let c of colorOptions" [style.background]="c"
+                        [class.selected]="form.color === c" (click)="form.color = c"></div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn-cancel" (click)="closeModal()">Annuler</button>
+            <button class="btn-submit" [disabled]="!formValid()" (click)="saveEvent()">
+                <i class="fas" [class.fa-plus]="!editingId" [class.fa-save]="editingId !== null"></i>
+                {{ editingId ? 'Enregistrer' : 'Créer' }}
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Delete confirm -->
+<div class="modal-overlay" *ngIf="deleteId !== null" (click)="deleteId = null">
+    <div class="modal confirm-modal" (click)="$event.stopPropagation()">
+        <div class="confirm-icon"><i class="fas fa-trash"></i></div>
+        <h3>Supprimer l'évènement ?</h3>
+        <p>Cette action est irréversible.</p>
+        <div class="confirm-actions">
+            <button class="btn-cancel" (click)="deleteId = null">Annuler</button>
+            <button class="btn-delete" (click)="confirmDelete()">Supprimer</button>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="page-header">
+        <div>
+            <h1 class="page-title">Évènements</h1>
+            <p class="page-sub">Découvrez et gérez les évènements du campus</p>
+        </div>
+        <button class="btn-create" (click)="openCreate()">
+            <i class="fas fa-plus"></i> Créer un évènement
+        </button>
+    </div>
+
+    <div class="stats-bar">
+        <div class="stat-pill"><i class="fas fa-calendar-alt"></i> {{ events.length }} évènements</div>
+        <div class="stat-pill registered"><i class="fas fa-check-circle"></i> {{ registeredCount() }} inscrits</div>
+    </div>
+
+    <div class="events-grid">
+        <div class="event-card" *ngFor="let ev of events; let i = index" [style.animation-delay]="i*0.07+'s'">
+            <div class="ev-banner" [style.background]="ev.color">
+                <span class="ev-cat">{{ ev.category }}</span>
+                <!-- Edit/Delete: only for event owner -->
+                <div class="ev-actions" *ngIf="ev.isOwner">
+                    <button class="ev-action-btn" (click)="openEdit(ev)" title="Modifier"><i
+                            class="fas fa-edit"></i></button>
+                    <button class="ev-action-btn danger" (click)="promptDelete(ev.id)" title="Supprimer"><i
+                            class="fas fa-trash"></i></button>
+                </div>
+            </div>
+            <div class="ev-body">
+                <h3>{{ ev.title }}</h3>
+                <div class="ev-meta">
+                    <span><i class="fas fa-calendar"></i> {{ formatDate(ev.date) }}</span>
+                    <span><i class="fas fa-clock"></i> {{ ev.time }}</span>
+                </div>
+                <div class="ev-meta">
+                    <span><i class="fas fa-map-marker-alt"></i> {{ ev.location }}</span>
+                </div>
+                <p class="ev-desc">{{ ev.description }}</p>
+                <div class="ev-footer">
+                    <div class="ev-count">
+                        <i class="fas fa-users"></i> {{ ev.registeredCount }}{{ ev.maxCapacity ? '/' + ev.maxCapacity :
+                        '' }} inscrits
+                    </div>
+                    <!-- Register/unregister: for all events -->
+                    <button class="btn-register" [class.registered]="ev.registered" (click)="toggle(ev)">
+                        <i class="fas" [class.fa-calendar-check]="ev.registered"
+                            [class.fa-calendar-plus]="!ev.registered"></i>
+                        {{ ev.registered ? 'Inscrit ✓' : "S'inscrire" }}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,81 @@
+<app-particles-bg />
+<app-navbar />
+<app-toast />
+
+<div class="workspace">
+    <!-- Conversation Panel -->
+    <div class="conv-panel">
+        <div class="conv-header">
+            <h3>Messages</h3>
+            <button class="compose-btn"><i class="fas fa-edit"></i></button>
+        </div>
+        <div class="conv-search">
+            <div class="conv-search-inner">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Rechercher...">
+            </div>
+        </div>
+        <div class="conv-section-lbl">Récents</div>
+        <div class="conv-list">
+            <div class="conv-item" *ngFor="let c of conversations" [class.active]="activeConv?.id === c.id"
+                (click)="selectConv(c)">
+                <div class="conv-av">{{ c.initials }}<span class="online-dot" *ngIf="c.online"></span></div>
+                <div class="conv-body">
+                    <h4>{{ c.name }}</h4>
+                    <p>{{ c.preview }}</p>
+                </div>
+                <div class="conv-aside">
+                    <span class="conv-time">{{ c.time }}</span>
+                    <span class="unread-badge" *ngIf="c.unread">{{ c.unread }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chat Panel -->
+    <div class="chat-panel" *ngIf="activeConv; else emptyState">
+        <div class="chat-header">
+            <div class="conv-av">{{ activeConv.initials }}<span class="online-dot" *ngIf="activeConv.online"></span>
+            </div>
+            <div>
+                <h4>{{ activeConv.name }}</h4>
+                <div class="chat-status" *ngIf="activeConv.online">En ligne</div>
+            </div>
+            <div class="chat-header-right">
+                <button class="icon-btn"><i class="fas fa-info-circle"></i></button>
+            </div>
+        </div>
+
+        <div class="messages" #messagesContainer>
+            <div class="date-sep">Aujourd'hui</div>
+            <div class="msg-row" *ngFor="let m of activeMessages" [class.received]="m.senderId !== myId"
+                [class.sent]="m.senderId === myId">
+                <div class="bubble">{{ m.content }}</div>
+                <span class="msg-time">{{ m.timestamp | date:'shortTime' }}</span>
+            </div>
+            <div class="typing" *ngIf="typing">
+                <div class="conv-av" style="width:34px;height:34px;font-size:.7rem">{{ activeConv.initials }}</div>
+                <div class="typing-bubble">
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="chat-input-bar">
+            <i class="fas fa-paperclip attach-btn"></i>
+            <i class="far fa-smile emoji-btn"></i>
+            <input type="text" class="msg-input" [(ngModel)]="inputText" placeholder="Écrire un message..."
+                (keyup.enter)="sendMessage()">
+            <button class="send-btn" (click)="sendMessage()"><i class="fas fa-paper-plane"></i></button>
+        </div>
+    </div>
+
+    <ng-template #emptyState>
+        <div class="chat-panel empty-state">
+            <div class="empty-icon"><i class="fas fa-comments"></i></div>
+            <p>Sélectionnez une conversation</p>
+        </div>
+    </ng-template>
+</div>

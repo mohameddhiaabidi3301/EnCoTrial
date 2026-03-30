@@ -1,0 +1,300 @@
+/* =======================================================
+   ENICAR Connect — Global Styles
+   Identical token system to the HTML prototypes
+======================================================= */
+
+/* ── Google Fonts ─── */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+/* ── Font Awesome ─── */
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css');
+
+/* ── Design Tokens — Dark (default) ─── */
+:root {
+    --gold: #C9A84C;
+    --gold-light: #E8C96A;
+    --bg: #050D1A;
+    --bg-card: #0D1F3C;
+    --bg-inner: rgba(255, 255, 255, .045);
+    --navy-nav: #0A1628;
+    --text: #FFFFFF;
+    --text-2: rgba(255, 255, 255, .72);
+    --text-3: rgba(255, 255, 255, .40);
+    --border: rgba(201, 168, 76, .15);
+    --search-bg: rgba(255, 255, 255, .06);
+    --shadow: 0 8px 32px rgba(0, 0, 0, .4);
+    --nav-h: 68px;
+
+    /* Roles */
+    --role-student: #6366f1;
+    --role-student-bg: rgba(99, 102, 241, .12);
+    --role-prof: #C9A84C;
+    --role-prof-bg: rgba(201, 168, 76, .14);
+    --role-admin: #f43f5e;
+    --role-admin-bg: rgba(244, 63, 94, .13);
+    --role-alumni: #10b981;
+    --role-alumni-bg: rgba(16, 185, 129, .13);
+    --role-direction: #a855f7;
+    --role-direction-bg: rgba(168, 85, 247, .13);
+}
+
+/* ── Design Tokens — Light ─── */
+[data-theme="light"] {
+    --bg: #F5F7FA;
+    --bg-card: #FFFFFF;
+    --bg-inner: rgba(0, 0, 0, .05);
+    --navy-nav: #FFFFFF;
+    --text: #111827;
+    --text-2: #374151;
+    --text-3: #9CA3AF;
+    --border: rgba(0, 0, 0, .09);
+    --search-bg: rgba(0, 0, 0, .05);
+    --shadow: 0 2px 12px rgba(0, 0, 0, .07);
+}
+
+/* ── Reset ─── */
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    height: 100%;
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    overflow-x: hidden;
+    transition: background .4s, color .4s;
+    scroll-behavior: smooth;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+button,
+input,
+textarea {
+    font-family: 'Inter', sans-serif;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+}
+
+/* ── Scrollbar ─── */
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--gold);
+}
+
+/* ── Role Badges ─── */
+.role-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: .28rem;
+    padding: 2px 9px;
+    border-radius: 20px;
+    font-size: .6rem;
+    font-weight: 700;
+    letter-spacing: .3px;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.role-badge.student {
+    background: var(--role-student-bg);
+    color: var(--role-student);
+    border: 1px solid rgba(99, 102, 241, .25);
+}
+
+.role-badge.prof {
+    background: var(--role-prof-bg);
+    color: var(--role-prof);
+    border: 1px solid rgba(201, 168, 76, .3);
+}
+
+.role-badge.admin {
+    background: var(--role-admin-bg);
+    color: var(--role-admin);
+    border: 1px solid rgba(244, 63, 94, .25);
+}
+
+.role-badge.alumni {
+    background: var(--role-alumni-bg);
+    color: var(--role-alumni);
+    border: 1px solid rgba(16, 185, 129, .25);
+}
+
+/* teacher is an alias for prof (same gold style) */
+.role-badge.prof,
+.role-badge.teacher {
+    background: var(--role-prof-bg);
+    color: var(--role-prof);
+    border: 1px solid rgba(201, 168, 76, .3);
+}
+
+/* admin_staff uses admin CSS (same red style) */
+.role-badge.admin,
+.role-badge.admin_staff {
+    background: var(--role-admin-bg);
+    color: var(--role-admin);
+    border: 1px solid rgba(244, 63, 94, .25);
+}
+
+.role-badge.direction {
+    background: var(--role-direction-bg);
+    color: var(--role-direction);
+    border: 1px solid rgba(168, 85, 247, .25);
+}
+
+/* ── Generic Card ─── */
+.card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    transition: background .4s, border-color .4s;
+}
+
+/* ── Keyframes ─── */
+@keyframes orbPulse {
+    0% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    50% {
+        transform: translate(20px, 15px) scale(1.08);
+    }
+
+    100% {
+        transform: translate(-10px, 25px) scale(.95);
+    }
+}
+
+@keyframes avatarPulse {
+
+    0%,
+    100% {
+        box-shadow: 0 0 0 0 rgba(201, 168, 76, .4);
+    }
+
+    50% {
+        box-shadow: 0 0 0 10px rgba(201, 168, 76, 0);
+    }
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: 200% 0;
+    }
+
+    100% {
+        background-position: -200% 0;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes heartBeat {
+    0% {
+        transform: scale(1);
+    }
+
+    30% {
+        transform: scale(1.45);
+    }
+
+    70% {
+        transform: scale(.9);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes toastIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(.9);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes toastOut {
+    to {
+        opacity: 0;
+        transform: translateY(10px) scale(.95);
+    }
+}
+
+@keyframes typingBounce {
+
+    0%,
+    80%,
+    100% {
+        transform: translateY(0);
+        opacity: .5;
+    }
+
+    40% {
+        transform: translateY(-7px);
+        opacity: 1;
+    }
+}
+
+@keyframes itemFadeIn {
+    from {
+        opacity: 0;
+        transform: translateX(-12px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}

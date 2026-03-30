@@ -1,0 +1,56 @@
+:host {
+    display: contents;
+}
+
+#particles-canvas {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.orbs {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    animation: orbPulse 8s ease-in-out infinite alternate;
+}
+
+:host-context([data-theme="light"]) .orb {
+    opacity: .04;
+}
+
+.orb-1 {
+    width: 520px;
+    height: 520px;
+    background: radial-gradient(circle, rgba(201, 168, 76, .35), transparent);
+    top: -15%;
+    left: -10%;
+    animation-duration: 13s;
+}
+
+.orb-2 {
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(13, 31, 60, .8), transparent);
+    bottom: -10%;
+    right: -8%;
+    animation-duration: 9s;
+}
+
+.orb-3 {
+    width: 260px;
+    height: 260px;
+    background: radial-gradient(circle, rgba(99, 102, 241, .18), transparent);
+    top: 40%;
+    right: 18%;
+    animation-duration: 17s;
+}

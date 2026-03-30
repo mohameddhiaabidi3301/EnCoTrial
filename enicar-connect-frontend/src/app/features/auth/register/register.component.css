@@ -1,0 +1,295 @@
+:host {
+    display: grid;
+    place-items: center;
+    min-height: 100vh;
+    padding: 2rem;
+}
+
+.theme-corner {
+    position: fixed;
+    top: 1.25rem;
+    right: 1.5rem;
+    z-index: 200;
+}
+
+.theme-btn {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    background: var(--bg-inner);
+    color: var(--gold);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: .25s;
+    backdrop-filter: blur(10px);
+}
+
+.theme-btn:hover {
+    transform: rotate(20deg);
+    background: rgba(201, 168, 76, .18);
+}
+
+.register-card {
+    position: relative;
+    z-index: 2;
+    background: var(--bg-card);
+    backdrop-filter: blur(28px);
+    border: 1px solid var(--border);
+    border-radius: 26px;
+    padding: 2.5rem;
+    width: 100%;
+    max-width: 560px;
+    box-shadow: 0 24px 70px rgba(0, 0, 0, .45);
+    animation: slideUp .7s cubic-bezier(.2, .8, .3, 1) both;
+    overflow: hidden;
+}
+
+.register-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold-light), var(--gold), transparent);
+    animation: shimmer 3s linear infinite;
+    background-size: 200% 100%;
+}
+
+.card-logo {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.logo-circle {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 3px solid var(--gold);
+    overflow: hidden;
+    margin: 0 auto .75rem;
+    background: rgba(201, 168, 76, .1);
+}
+
+.logo-circle img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.app-name {
+    font-size: 1.75rem;
+    font-weight: 800;
+    letter-spacing: -1px;
+    color: var(--gold);
+}
+
+.app-sub {
+    font-size: .85rem;
+    letter-spacing: 4px;
+    color: var(--text-2);
+    margin-top: .15rem;
+    font-weight: 300;
+}
+
+/* Form rows */
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: .75rem;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-label {
+    display: block;
+    font-size: .78rem;
+    font-weight: 600;
+    color: var(--text-2);
+    margin-bottom: .4rem;
+}
+
+.form-label .optional {
+    font-weight: 400;
+    opacity: .6;
+    font-size: .72rem;
+}
+
+.input-wrap {
+    position: relative;
+}
+
+.input-wrap i {
+    position: absolute;
+    left: .85rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--gold);
+    font-size: .8rem;
+    opacity: .75;
+    pointer-events: none;
+}
+
+.form-input {
+    width: 100%;
+    padding: .75rem 1rem .75rem 2.5rem;
+    background: var(--bg-inner);
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    color: var(--text);
+    font-size: .88rem;
+    outline: none;
+    transition: .25s;
+}
+
+.form-input::placeholder {
+    color: var(--text-2);
+    opacity: .45;
+}
+
+.form-input:focus {
+    border-color: var(--gold);
+    background: rgba(201, 168, 76, .06);
+    box-shadow: 0 0 0 3px rgba(201, 168, 76, .12);
+}
+
+.form-select {
+    appearance: none;
+    cursor: pointer;
+}
+
+/* Role grid */
+.role-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: .5rem;
+}
+
+.role-option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .3rem;
+    padding: .6rem .4rem;
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    background: var(--bg-inner);
+    cursor: pointer;
+    transition: .25s;
+    font-size: .72rem;
+    color: var(--text-2);
+    text-align: center;
+}
+
+.role-option input[type="radio"] {
+    display: none;
+}
+
+.role-option i {
+    font-size: 1.1rem;
+    color: var(--text-2);
+    transition: .25s;
+}
+
+.role-option:hover {
+    border-color: var(--gold);
+    background: rgba(201, 168, 76, .06);
+}
+
+.role-option.active {
+    border-color: var(--gold);
+    background: rgba(201, 168, 76, .12);
+    color: var(--gold);
+}
+
+.role-option.active i {
+    color: var(--gold);
+}
+
+/* Error, button, divider, footer */
+.error-msg {
+    color: #f87171;
+    font-size: .8rem;
+    margin-bottom: .75rem;
+    padding: .5rem 1rem;
+    background: rgba(248, 113, 113, .1);
+    border-radius: 8px;
+    border: 1px solid rgba(248, 113, 113, .2);
+}
+
+.btn-submit {
+    width: 100%;
+    padding: .9rem;
+    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    border: none;
+    border-radius: 28px;
+    color: #050D1A;
+    font-size: .95rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: .3s;
+    margin-top: .5rem;
+    letter-spacing: .3px;
+    box-shadow: 0 4px 16px rgba(201, 168, 76, .3);
+}
+
+.btn-submit:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 28px rgba(201, 168, 76, .45);
+    filter: brightness(1.07);
+}
+
+.btn-submit:disabled {
+    opacity: .7;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.divider {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 1.25rem 0;
+    color: var(--text-2);
+    font-size: .78rem;
+}
+
+.divider::before,
+.divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+}
+
+.footer-txt {
+    text-align: center;
+    font-size: .83rem;
+    color: var(--text-2);
+}
+
+.footer-txt a {
+    color: var(--gold);
+    font-weight: 700;
+}
+
+.footer-txt a:hover {
+    color: var(--gold-light);
+}
+
+@media (max-width: 500px) {
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+    .role-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .register-card {
+        padding: 1.5rem;
+    }
+}

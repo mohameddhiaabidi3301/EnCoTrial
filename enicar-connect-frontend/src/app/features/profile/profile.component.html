@@ -1,0 +1,144 @@
+<app-particles-bg /><app-navbar /><app-toast />
+
+<div class="container">
+    <!-- Header Card -->
+    <div class="card profile-header">
+        <div class="banner">
+            <button class="banner-edit"><i class="fas fa-camera"></i> Modifier</button>
+        </div>
+        <div class="header-body">
+            <div class="header-top">
+                <div>
+                    <div class="p-avatar-wrap">
+                        <div class="p-avatar" [style.background]="auth.currentUser()?.avatarBg"
+                            [style.color]="auth.currentUser()?.avatarColor">
+                            {{ auth.currentUser()?.initials }}
+                        </div>
+                        <div class="av-online"></div>
+                    </div>
+                    <div class="p-name">{{ auth.currentUser()?.fullName || auth.currentUser()?.name }}</div>
+                    <div class="p-role">{{ auth.currentUser()?.title }}</div>
+                    <div class="p-location"><i class="fas fa-map-marker-alt"></i> {{ auth.currentUser()?.location ||
+                        'Tunis, Tunisie' }}</div>
+                </div>
+                <div class="action-row">
+                    <button class="btn-primary" (click)="toast.show('fas fa-user-plus','Demande envoyée !')">
+                        <i class="fas fa-user-plus"></i> Connexion
+                    </button>
+                    <button class="btn-outline" routerLink="/messaging">
+                        <i class="fas fa-envelope"></i> Message
+                    </button>
+                    <a routerLink="/account" class="btn-outline">
+                        <i class="fas fa-edit"></i> Modifier le profil
+                    </a>
+                </div>
+            </div>
+            <div class="stats-row">
+                <div class="stat-item"><span class="val">245</span><span class="lbl">Connexions</span></div>
+                <div class="stat-item"><span class="val">12</span><span class="lbl">Projets</span></div>
+                <div class="stat-item"><span class="val">8</span><span class="lbl">Certifications</span></div>
+                <div class="stat-item"><span class="val">3</span><span class="lbl">Publications</span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2-col grid -->
+    <div class="profile-grid">
+        <div>
+            <!-- About -->
+            <div class="card card-body">
+                <div class="sec-title"><i class="fas fa-info-circle"></i> À propos</div>
+                <p class="about-text">Étudiant passionné en 2ème année de Génie Informatique à l'ENI Carthage,
+                    spécialisé dans le développement d'applications sécurisées et l'architecture logicielle.</p>
+            </div>
+
+            <!-- Experience -->
+            <div class="card card-body">
+                <div class="sec-title"><i class="fas fa-briefcase"></i> Expérience</div>
+                <div class="timeline">
+                    <div class="tl-item" *ngFor="let e of experience">
+                        <div class="tl-icon"><i [class]="e.icon"></i></div>
+                        <div class="tl-info">
+                            <h4>{{ e.title }}</h4>
+                            <p>{{ e.company }}</p>
+                            <span>{{ e.period }}</span>
+                            <div class="tl-desc">{{ e.description }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Projects -->
+            <div class="card card-body">
+                <div class="sec-title"><i class="fab fa-github"></i> Projets</div>
+                <div class="proj-grid">
+                    <div class="proj-card" *ngFor="let p of projects">
+                        <div class="proj-head">
+                            <span class="proj-name">{{ p.name }}</span>
+                            <span class="proj-vis">{{ p.vis }}</span>
+                        </div>
+                        <p class="proj-desc">{{ p.description }}</p>
+                        <div class="proj-meta">
+                            <span class="proj-lang">
+                                <span class="lang-dot" [style.background]="p.langColor"></span>{{ p.lang }}
+                            </span>
+                            <span><i class="far fa-star"></i> {{ p.stars }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <!-- Skills -->
+            <div class="card card-body">
+                <div class="sec-title"><i class="fas fa-chart-bar"></i> Compétences</div>
+                <div class="skill-list">
+                    <div class="skill-row" *ngFor="let s of skills">
+                        <div class="skill-head">
+                            <span class="skill-name">{{ s.name }}</span>
+                            <span class="skill-pct">{{ s.pct }}%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-fill" [style.width]="s.pct+'%'"></div>
+                        </div>
+                    </div>
+                </div>
+                <div style="margin-top:1.1rem">
+                    <div class="sec-title" style="margin-bottom:.7rem"><i class="fas fa-language"></i> Langages</div>
+                    <div class="tag-cloud">
+                        <span class="tag" *ngFor="let t of tags">{{ t }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Education -->
+            <div class="card card-body">
+                <div class="sec-title"><i class="fas fa-university"></i> Formation</div>
+                <div class="edu-item" *ngFor="let e of education">
+                    <div class="edu-icon"><i [class]="e.icon"></i></div>
+                    <div class="edu-info">
+                        <h4>{{ e.degree }}</h4>
+                        <p>{{ e.school }}</p>
+                        <span>{{ e.period }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Certifications -->
+            <div class="card card-body">
+                <div class="sec-title"><i class="fas fa-award"></i> Certifications</div>
+                <div class="cert-list">
+                    <div class="cert-row" *ngFor="let c of certifications">
+                        <div class="cert-icon"><i [class]="c.icon"></i></div>
+                        <div class="cert-info">
+                            <h5>{{ c.name }}</h5>
+                            <p>{{ c.issuer }} · {{ c.year }}</p>
+                        </div>
+                        <span class="cert-badge">✓ Vérifié</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,127 @@
+<app-particles-bg /><app-navbar /><app-toast />
+
+<!-- Create/Edit Modal -->
+<div class="modal-overlay" *ngIf="showModal" (click)="closeModal()">
+    <div class="modal" (click)="$event.stopPropagation()">
+        <div class="modal-header">
+            <h3>{{ editingId ? 'Modifier le groupe' : 'Créer un groupe' }}</h3>
+            <button class="modal-close" (click)="closeModal()"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label>Nom du groupe *</label>
+                <input type="text" [(ngModel)]="form.name" placeholder="Ex: Club Data Science">
+            </div>
+            <div class="form-group">
+                <label>Description</label>
+                <textarea [(ngModel)]="form.description" rows="3"
+                    placeholder="Décrivez l'objectif du groupe..."></textarea>
+            </div>
+            <div class="form-row">
+                <div class="form-group half">
+                    <label>Type de groupe</label>
+                    <select [(ngModel)]="form.groupType">
+                        <option value="FILIERE">Filière</option>
+                        <option value="PROMOTION">Promotion</option>
+                        <option value="CLUB">Club / Association</option>
+                        <option value="THEMATIC">Thématique</option>
+                        <option value="PROJECT">Projet</option>
+                    </select>
+                </div>
+                <div class="form-group half">
+                    <label>Confidentialité</label>
+                    <select [(ngModel)]="form.privacy">
+                        <option value="PUBLIC">Public</option>
+                        <option value="PRIVATE">Privé</option>
+                        <option value="INVITE_ONLY">Sur invitation</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Icône</label>
+                <div class="icon-picker">
+                    <div class="icon-opt" *ngFor="let ic of icons" [class.selected]="form.icon===ic"
+                        (click)="form.icon=ic">
+                        <i [class]="ic"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Couleur de bannière</label>
+                <div class="color-swatches">
+                    <div class="swatch" *ngFor="let g of gradients" [style.background]="g"
+                        [class.selected]="form.bannerGradient===g" (click)="form.bannerGradient=g"></div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn-cancel" (click)="closeModal()">Annuler</button>
+            <button class="btn-submit" [disabled]="!form.name?.trim()" (click)="save()">
+                <i class="fas" [class.fa-plus]="!editingId" [class.fa-save]="!!editingId"></i>
+                {{ editingId ? 'Enregistrer' : 'Créer' }}
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Delete confirm -->
+<div class="modal-overlay" *ngIf="deleteId !== null" (click)="deleteId=null">
+    <div class="modal confirm-modal" (click)="$event.stopPropagation()">
+        <div class="confirm-icon"><i class="fas fa-trash"></i></div>
+        <h3>Supprimer le groupe ?</h3>
+        <p>Cette action est irréversible.</p>
+        <div class="confirm-actions">
+            <button class="btn-cancel" (click)="deleteId=null">Annuler</button>
+            <button class="btn-delete" (click)="confirmDelete()">Supprimer</button>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="page-header">
+        <div>
+            <h1 class="page-title">Groupes</h1>
+            <p class="page-sub">Collaborez avec vos collègues et professeurs</p>
+        </div>
+        <button class="btn-create" (click)="openCreate()"><i class="fas fa-plus"></i> Créer un groupe</button>
+    </div>
+
+    <div class="tabs">
+        <div class="tab" [class.active]="activeTab==='mine'" (click)="activeTab='mine'">Mes Groupes</div>
+        <div class="tab" [class.active]="activeTab==='explore'" (click)="activeTab='explore'">Explorer</div>
+    </div>
+
+    <div class="groups-grid">
+        <div class="group-card" *ngFor="let g of filteredGroups(); let i = index" [style.animation-delay]="i*0.07+'s'">
+            <div class="group-banner" [style.background]="g.bannerGradient">
+                <!-- Edit/Delete only for owner -->
+                <div class="group-actions" *ngIf="g.isOwner">
+                    <button class="g-action-btn" (click)="openEdit(g)"><i class="fas fa-edit"></i></button>
+                    <button class="g-action-btn danger" (click)="deleteId=g.id"><i class="fas fa-trash"></i></button>
+                </div>
+            </div>
+            <div class="group-body">
+                <div class="group-icon" [style.color]="g.iconColor" [style.border-color]="g.iconColor">
+                    <i [class]="g.icon"></i>
+                </div>
+                <div class="group-info">
+                    <h3>{{ g.name }}</h3>
+                    <p>{{ g.description }}</p>
+                    <div class="group-foot">
+                        <div class="member-count"><i class="fas fa-users"></i> {{ g.memberCount }} membres</div>
+                        <div class="group-btns">
+                            <!-- Join/Leave for all, but hide if owner (already member) -->
+                            <button class="btn-join" [class.joined]="g.joined" (click)="toggleJoin(g)"
+                                *ngIf="!g.isOwner">
+                                <i class="fas" [class.fa-check]="g.joined" [class.fa-plus]="!g.joined"></i>
+                                {{ g.joined ? 'Membre' : 'Rejoindre' }}
+                            </button>
+                            <span class="owner-badge" *ngIf="g.isOwner"><i class="fas fa-crown"></i> Admin</span>
+                            <button class="btn-view" (click)="viewDetails(g.id)">Ouvrir</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

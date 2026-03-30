@@ -1,0 +1,60 @@
+<app-particles-bg /><app-navbar />
+
+<div class="container" *ngIf="group">
+    <div class="group-header" [style.background]="group.bannerGradient">
+        <div class="header-overlay">
+            <div class="header-content">
+                <div class="group-brand">
+                    <div class="group-identity" [style.color]="group.iconColor">
+                        <i [class]="group.icon"></i>
+                    </div>
+                    <div class="group-titles">
+                        <h1>{{ group.name }}</h1>
+                        <p>{{ group.description }}</p>
+                    </div>
+                </div>
+                <div class="header-stats">
+                    <div class="stat"><span>{{ group.memberCount }}</span><small>Membres</small></div>
+                    <div class="stat"><span>{{ group.groupType }}</span><small>Type</small></div>
+                    <div class="stat"><span>{{ group.privacy }}</span><small>Confidentialité</small></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="detail-layout">
+        <aside class="sidebar">
+            <div class="tabs-vertical">
+                <div class="v-tab" [class.active]="activeTab==='feed'" (click)="activeTab='feed'"><i
+                        class="fas fa-rss"></i> Fil d'actu</div>
+                <div class="v-tab" [class.active]="activeTab==='members'" (click)="activeTab='members'"><i
+                        class="fas fa-users"></i> Membres</div>
+                <div class="v-tab" [class.active]="activeTab==='resources'" (click)="activeTab='resources'"><i
+                        class="fas fa-file-alt"></i> Ressources</div>
+                <div class="v-tab" [class.active]="activeTab==='events'" (click)="activeTab='events'"><i
+                        class="fas fa-calendar-alt"></i> Événements</div>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <div *ngIf="activeTab==='feed'" class="fade-in">
+                <!-- Simple composer placeholder -->
+                <div class="composer card">
+                    <textarea [(ngModel)]="composerText" placeholder="Publier dans le groupe..."></textarea>
+                    <div class="composer-foot">
+                        <button class="btn-post" (click)="postText()">Publier</button>
+                    </div>
+                </div>
+                <div class="empty-state">
+                    <i class="fas fa-stream"></i>
+                    <p>Le fil d'actualités du groupe sera bientôt disponible avec les données réelles.</p>
+                </div>
+            </div>
+
+            <div *ngIf="activeTab!=='feed'" class="empty-state fade-in">
+                <i class="fas fa-tools"></i>
+                <p>Module <strong>{{ activeTab }}</strong> en cours de développement.</p>
+            </div>
+        </main>
+    </div>
+</div>

@@ -1,0 +1,192 @@
+<app-particles-bg />
+<app-navbar />
+<app-toast />
+
+<!-- Delete post confirm -->
+<div class="modal-overlay" *ngIf="deletePostId !== null" (click)="deletePostId=null">
+    <div class="modal confirm-modal" (click)="$event.stopPropagation()">
+        <div class="confirm-icon"><i class="fas fa-trash"></i></div>
+        <h3>Supprimer la publication ?</h3>
+        <p>Cette action est irréversible.</p>
+        <div class="confirm-actions">
+            <button class="btn-cancel" (click)="deletePostId=null">Annuler</button>
+            <button class="btn-delete" (click)="confirmDeletePost()">Supprimer</button>
+        </div>
+    </div>
+</div>
+
+<!-- Report modal -->
+<div class="modal-overlay" *ngIf="reportPostId !== null" (click)="reportPostId=null">
+    <div class="modal confirm-modal" (click)="$event.stopPropagation()">
+        <div class="confirm-icon" style="color:var(--gold)"><i class="fas fa-flag"></i></div>
+        <h3>Signaler cette publication</h3>
+        <textarea class="report-input" [(ngModel)]="reportReason" rows="3"
+            placeholder="Décrivez la raison du signalement..."></textarea>
+        <div class="confirm-actions">
+            <button class="btn-cancel" (click)="reportPostId=null">Annuler</button>
+            <button class="btn-delete" style="background:var(--gold);color:#050D1A" [disabled]="!reportReason.trim()"
+                (click)="submitReport()">Signaler</button>
+        </div>
+    </div>
+</div>
+
+<div class="feed-layout">
+    <!-- LEFT: Profile mini-card -->
+    <aside class="left-sidebar">
+        <div class="sidebar-card">
+            <div class="profile-banner"></div>
+            <div class="profile-info">
+                <div class="sidebar-av" [style.background]="auth.currentUser()?.avatarBg"
+                    [style.color]="auth.currentUser()?.avatarColor">
+                    {{ auth.currentUser()?.initials }}
+                </div>
+                <div class="sidebar-name">{{ auth.currentUser()?.name }}</div>
+                <div class="sidebar-sub">{{ auth.currentUser()?.title }}</div>
+                <div class="sidebar-stats">
+                    <div><span>48</span><small>Connexions</small></div>
+                    <div><span>12</span><small>Posts</small></div>
+                    <div><span>5</span><small>Groupes</small></div>
+                </div>
+            </div>
+            <a routerLink="/profile" class="view-profile-btn">Voir le profil</a>
+        </div>
+        <div class="sidebar-card quick-links">
+            <div class="ql-title">Navigation rapide</div>
+            <a class="ql-link" routerLink="/events"><i class="fas fa-calendar-alt"></i> Évènements</a>
+            <a class="ql-link" routerLink="/jobs"><i class="fas fa-briefcase"></i> Offres &amp; stages</a>
+            <a class="ql-link" routerLink="/resources"><i class="fas fa-file-alt"></i> Ressources</a>
+            <a class="ql-link" routerLink="/groups"><i class="fas fa-users"></i> Mes groupes</a>
+        </div>
+    </aside>
+
+    <!-- CENTER: Feed -->
+    <main class="feed-main">
+        <!-- Composer -->
+        <div class="composer card">
+            <div class="composer-row">
+                <div class="feed-av" [style.background]="auth.currentUser()?.avatarBg"
+                    [style.color]="auth.currentUser()?.avatarColor">
+                    {{ auth.currentUser()?.initials }}
+                </div>
+                <textarea class="composer-input" [(ngModel)]="composerText"
+                    placeholder="Partagez une idée, une ressource, une annonce..."
+                    [class.expanded]="composerText.length > 0" rows="1"></textarea>
+            </div>
+            <div class="composer-actions" *ngIf="composerText.length > 0">
+                <div class="composer-tools">
+                    <button class="tool-btn"><i class="fas fa-image"></i> Photo</button>
+                    <button class="tool-btn"><i class="fas fa-file-alt"></i> Document</button>
+                    <button class="tool-btn"><i class="fas fa-poll"></i> Sondage</button>
+                </div>
+                <button class="post-btn" [disabled]="!composerText.trim()" (click)="postText()">
+                    <i class="fas fa-paper-plane"></i> Publier
+                </button>
+            </div>
+        </div>
+
+        <!-- Posts -->
+        <div class="post-card card" *ngFor="let post of posts$ | async">
+            <div class="post-head">
+                <div class="post-av" [style.background]="post.authorAvatarBg" [style.color]="post.authorAvatarColor">
+                    {{ post.authorInitials }}
+                </div>
+                <div class="post-meta">
+                    <div class="post-name">
+                        {{ post.authorName }} <app-role-badge [role]="post.authorRole" />
+                    </div>
+                    <div class="post-time">{{ post.createdAt | date:'dd MMM yyyy, HH:mm' }}</div>
+                </div>
+                <!-- Post controls -->
+                <div class="post-menu">
+                    <button class="menu-btn" *ngIf="post.authorId === auth.currentUser()?.id" (click)="startEdit(post)"
+                        title="Modifier">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                    <button class="menu-btn danger" *ngIf="post.authorId === auth.currentUser()?.id"
+                        (click)="deletePostId=post.id" title="Supprimer">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                    <button class="menu-btn" *ngIf="post.authorId !== auth.currentUser()?.id"
+                        (click)="reportPostId=post.id" title="Signaler">
+                        <i class="fas fa-flag"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Body or Edit mode -->
+            <div class="post-body" *ngIf="editingPostId !== post.id">
+                <p [innerHTML]="formatBody(post.body)"></p>
+            </div>
+            <div class="post-edit-wrap" *ngIf="editingPostId === post.id">
+                <textarea class="edit-input" [(ngModel)]="editBodyText" rows="3"></textarea>
+                <div class="edit-actions">
+                    <button class="btn-cancel-sm" (click)="editingPostId=null">Annuler</button>
+                    <button class="btn-save-sm" (click)="saveEdit(post.id)">Enregistrer</button>
+                </div>
+            </div>
+
+            <!-- Reactions bar -->
+            <div class="reactions-bar">
+                <button class="react-btn" [class.liked]="post.likedByMe" (click)="postSvc.toggleLike(post.id)">
+                    <i class="fas fa-heart"></i> {{ post.likesCount }}
+                </button>
+                <button class="react-btn" (click)="postSvc.toggleComments(post.id)">
+                    <i class="fas fa-comment"></i> {{ post.commentsCount }}
+                </button>
+                <button class="react-btn"
+                    (click)="postSvc.sharePost(post.id); toast.show('fas fa-share','Lien copié !')">
+                    <i class="fas fa-share"></i> Partager
+                </button>
+            </div>
+
+            <!-- Comments -->
+            <div class="comments-section" *ngIf="post.commentsOpen">
+                <div class="comment-item" *ngFor="let c of post.comments">
+                    <div class="c-av" [style.background]="c.authorAvatarBg" [style.color]="c.authorAvatarColor">{{
+                        c.authorInitials }}
+                    </div>
+                    <div class="c-bubble">
+                        <div class="c-name">{{ c.authorName }} <app-role-badge [role]="c.authorRole" /></div>
+                        <p>{{ c.text }}</p>
+                    </div>
+                    <!-- Delete only own comments -->
+                    <button class="c-delete-btn" *ngIf="c.authorId === auth.currentUser()?.id"
+                        (click)="postSvc.deleteComment(post.id, c.id)" title="Supprimer">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="comment-input-row">
+                    <div class="feed-av small" [style.background]="auth.currentUser()?.avatarBg"
+                        [style.color]="auth.currentUser()?.avatarColor">
+                        {{ auth.currentUser()?.initials }}
+                    </div>
+                    <input type="text" class="c-input" [(ngModel)]="commentTexts[post.id]" placeholder="Commenter..."
+                        (keyup.enter)="addComment(post.id)">
+                    <button class="c-send" (click)="addComment(post.id)"><i class="fas fa-paper-plane"></i></button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- RIGHT: Trending / Suggestions -->
+    <aside class="right-sidebar">
+        <div class="sidebar-card">
+            <div class="sidebar-title">🔥 Trending</div>
+            <div class="trending-item" *ngFor="let t of trending">
+                <div class="t-tag">#{{ t.tag }}</div>
+                <div class="t-count">{{ t.count }} posts</div>
+            </div>
+        </div>
+        <div class="sidebar-card">
+            <div class="sidebar-title">Suggestions</div>
+            <div class="suggest-item" *ngFor="let s of suggestions">
+                <div class="suggest-av" [style.background]="s.bg">{{ s.initials }}</div>
+                <div class="suggest-info">
+                    <div class="suggest-name">{{ s.name }}</div>
+                    <div class="suggest-role">{{ s.desc }}</div>
+                </div>
+                <button class="follow-btn" (click)="toast.show('fas fa-user-plus','Demande envoyée !')">+</button>
+            </div>
+        </div>
+    </aside>
+</div>

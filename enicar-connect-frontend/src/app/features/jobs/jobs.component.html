@@ -1,0 +1,132 @@
+<app-particles-bg /><app-navbar /><app-toast />
+
+<!-- Create/Edit Modal -->
+<div class="modal-overlay" *ngIf="showModal" (click)="closeModal()">
+    <div class="modal" (click)="$event.stopPropagation()">
+        <div class="modal-header">
+            <h3>{{ editingId ? 'Modifier l\'offre' : 'Publier une offre' }}</h3>
+            <button class="modal-close" (click)="closeModal()"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="modal-body">
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Titre du poste *</label>
+                    <input type="text" [(ngModel)]="form.title" placeholder="Ex: Développeur Angular">
+                </div>
+                <div class="form-group">
+                    <label>Entreprise *</label>
+                    <input type="text" [(ngModel)]="form.company" placeholder="Ex: Telnet Holding">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Lieu</label>
+                    <input type="text" [(ngModel)]="form.location" placeholder="Ex: Tunis">
+                </div>
+                <div class="form-group">
+                    <label>Type de contrat</label>
+                    <select [(ngModel)]="form.type">
+                        <option value="CDI">CDI</option>
+                        <option value="CDD">CDD</option>
+                        <option value="Stage">Stage</option>
+                        <option value="Alternance">Alternance</option>
+                        <option value="Freelance">Freelance</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Description *</label>
+                <textarea [(ngModel)]="form.description" rows="4" placeholder="Décrivez le poste..."></textarea>
+            </div>
+            <div class="form-group">
+                <label>Tags (séparés par des virgules)</label>
+                <input type="text" [(ngModel)]="tagsInput" placeholder="Ex: Angular, TypeScript, RxJS">
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn-cancel" (click)="closeModal()">Annuler</button>
+            <button class="btn-submit" [disabled]="!formValid()" (click)="save()">
+                <i class="fas" [class.fa-plus]="!editingId" [class.fa-save]="!!editingId"></i>
+                {{ editingId ? 'Enregistrer' : 'Publier' }}
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Delete confirm -->
+<div class="modal-overlay" *ngIf="deleteId !== null" (click)="deleteId=null">
+    <div class="modal confirm-modal" (click)="$event.stopPropagation()">
+        <div class="confirm-icon"><i class="fas fa-trash"></i></div>
+        <h3>Supprimer l'offre ?</h3>
+        <p>Cette offre sera définitivement supprimée.</p>
+        <div class="confirm-actions">
+            <button class="btn-cancel" (click)="deleteId=null">Annuler</button>
+            <button class="btn-delete" (click)="confirmDelete()">Supprimer</button>
+        </div>
+    </div>
+</div>
+
+<div class="page-wrap">
+    <aside class="filter-sidebar">
+        <div class="card card-body">
+            <div class="filter-title">Type de contrat</div>
+            <label class="filter-opt" *ngFor="let t of types">
+                <input type="checkbox" [checked]="activeTypes.includes(t)" (change)="toggleType(t)">
+                <span>{{ t }}</span>
+            </label>
+        </div>
+        <div class="card card-body">
+            <div class="filter-title">Localisation</div>
+            <label class="filter-opt" *ngFor="let l of locations">
+                <input type="radio" name="loc" [value]="l" [(ngModel)]="activeLocation">
+                <span>{{ l }}</span>
+            </label>
+        </div>
+    </aside>
+
+    <main>
+        <div class="jobs-header">
+            <div>
+                <h1 class="page-title">Offres &amp; Stages</h1>
+                <p class="count-label">{{ filteredJobs().length }} offre(s) disponible(s)</p>
+            </div>
+            <button class="btn-create" (click)="openCreate()"><i class="fas fa-plus"></i> Publier une offre</button>
+        </div>
+
+        <div class="job-card" *ngFor="let j of filteredJobs(); let i = index" [style.animation-delay]="i*0.06+'s'">
+            <div class="job-head">
+                <div class="company-av">{{ j.company.charAt(0) }}</div>
+                <div class="job-meta">
+                    <h3>{{ j.title }}</h3>
+                    <div class="job-sub">{{ j.company }} · {{ j.location }}</div>
+                </div>
+                <span class="job-type" [class]="'type-'+j.type.toLowerCase()">{{ j.type }}</span>
+                <!-- Edit/Delete only for owner -->
+                <div class="job-edit-btns" *ngIf="j.isOwner">
+                    <button class="j-btn" (click)="openEdit(j)" title="Modifier"><i class="fas fa-edit"></i></button>
+                    <button class="j-btn danger" (click)="deleteId=j.id" title="Supprimer"><i
+                            class="fas fa-trash"></i></button>
+                </div>
+            </div>
+            <p class="job-desc">{{ j.description }}</p>
+            <div class="job-tags">
+                <span class="tag" *ngFor="let t of j.tags">{{ t }}</span>
+            </div>
+            <div class="job-foot">
+                <span class="posted"><i class="far fa-clock"></i> {{ j.posted }}</span>
+                <!-- Apply only for non-owner jobs -->
+                <button *ngIf="!j.isOwner" class="btn-apply" [class.applied]="j.applied" [disabled]="j.applied"
+                    (click)="apply(j)">
+                    <i class="fas" [class.fa-check]="j.applied" [class.fa-paper-plane]="!j.applied"></i>
+                    {{ j.applied ? 'Candidature envoyée' : 'Postuler' }}
+                </button>
+                <span *ngIf="j.isOwner" class="owner-label"><i class="fas fa-star"></i> Votre offre</span>
+            </div>
+        </div>
+
+        <div class="empty-jobs" *ngIf="filteredJobs().length === 0">
+            <i class="fas fa-briefcase"></i>
+            <p>Aucune offre ne correspond à vos filtres.</p>
+        </div>
+    </main>
+</div>

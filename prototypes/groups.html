@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ENICAR Connect — Groupes</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="theme-manager.js"></script>
+    <style>
+        :root {
+            --gold: #C9A84C;
+            --gold-light: #E8C96A;
+            --bg: #050D1A;
+            --bg-card: #0D1F3C;
+            --bg-inner: rgba(255, 255, 255, .045);
+            --navy-nav: #0A1628;
+            --text: #FFF;
+            --text-2: rgba(255, 255, 255, .72);
+            --text-3: rgba(255, 255, 255, .40);
+            --border: rgba(201, 168, 76, .15);
+            --nav-h: 68px;
+            --shadow: 0 8px 32px rgba(0, 0, 0, .4);
+        }
+
+        [data-theme="light"] {
+            --bg: #F5F7FA;
+            --bg-card: #FFFFFF;
+            --bg-inner: rgba(0, 0, 0, .05);
+            --navy-nav: #FFFFFF;
+            --text: #111827;
+            --text-2: #374151;
+            --text-3: #9CA3AF;
+            --border: rgba(0, 0, 0, .09);
+            --shadow: 0 2px 12px rgba(0, 0, 0, .07);
+        }
+
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            overflow-x: hidden;
+            transition: background .4s, color .4s;
+        }
+
+        #particles-canvas {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .orbs {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            animation: orbPulse 8s ease-in-out infinite alternate;
+        }
+
+        [data-theme="light"] .orb {
+            opacity: .04;
+        }
+
+        .orb-1 {
+            width: 520px;
+            height: 520px;
+            background: radial-gradient(circle, rgba(201, 168, 76, .35), transparent);
+            top: -15%;
+            left: -10%;
+            animation-duration: 13s;
+        }
+
+        .orb-2 {
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(13, 31, 60, .8), transparent);
+            bottom: -10%;
+            right: -8%;
+            animation-duration: 9s;
+        }
+
+        .orb-3 {
+            width: 260px;
+            height: 260px;
+            background: radial-gradient(circle, rgba(232, 201, 106, .2), transparent);
+            top: 40%;
+            right: 15%;
+            animation-duration: 17s;
+        }
+
+        @keyframes orbPulse {
+            0% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            50% {
+                transform: translate(20px, 15px) scale(1.08);
+            }
+
+            100% {
+                transform: translate(-10px, 25px) scale(.95);
+            }
+        }
+
+        .navbar {
+            height: var(--nav-h);
+            background: var(--navy-nav);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 3rem;
+            position: sticky;
+            top: 0;
+            z-index: 900;
+            backdrop-filter: blur(20px);
+            transition: background .4s, border-color .4s;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: .75rem;
+            text-decoration: none;
+        }
+
+        .brand-logo {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            border: 2px solid var(--gold);
+            overflow: hidden;
+        }
+
+        .brand-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .brand-text .eni {
+            color: var(--gold);
+            font-weight: 800;
+            font-size: 1.1rem;
+            letter-spacing: -.5px;
+        }
+
+        .brand-text .conn {
+            color: var(--text);
+            font-weight: 400;
+            font-size: .95rem;
+            opacity: .8;
+            margin-left: .3rem;
+            transition: color .4s;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: .4rem;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-2);
+            text-decoration: none;
+            width: 70px;
+            height: 54px;
+            border-radius: 12px;
+            gap: 3px;
+            transition: all .2s;
+        }
+
+        .nav-item i {
+            font-size: 1.15rem;
+        }
+
+        .nav-item span {
+            font-size: .6rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: .3px;
+        }
+
+        .nav-item:hover,
+        .nav-item.active {
+            color: var(--gold-light);
+            background: rgba(201, 168, 76, .09);
+        }
+
+        .nav-item.logout:hover {
+            color: #f87171;
+            background: rgba(248, 113, 113, .09);
+        }
+
+        .theme-btn {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            border: 1px solid var(--border);
+            background: var(--bg-inner);
+            color: var(--gold);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all .25s;
+            flex-shrink: 0;
+        }
+
+        .theme-btn:hover {
+            background: rgba(201, 168, 76, .15);
+            transform: rotate(20deg);
+        }
+
+        .container {
+            position: relative;
+            z-index: 2;
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .page-title {
+            font-size: 2.1rem;
+            font-weight: 800;
+            margin-bottom: .3rem;
+            background: linear-gradient(90deg, var(--gold), var(--gold-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .page-sub {
+            color: var(--text-2);
+            font-size: .9rem;
+        }
+
+        .btn-create {
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            color: #050D1A;
+            padding: .7rem 1.5rem;
+            border-radius: 28px;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: .6rem;
+            transition: .3s;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .btn-create:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 24px rgba(201, 168, 76, .35);
+        }
+
+        .tabs {
+            display: flex;
+            gap: 2rem;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 2rem;
+        }
+
+        .tab {
+            padding: .9rem 0;
+            color: var(--text-2);
+            cursor: pointer;
+            position: relative;
+            font-weight: 600;
+            font-size: .9rem;
+            transition: .2s;
+        }
+
+        .tab.active {
+            color: var(--gold);
+        }
+
+        .tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--gold), var(--gold-light));
+            border-radius: 2px;
+        }
+
+        .groups-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .group-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all .35s;
+            box-shadow: var(--shadow);
+        }
+
+        .group-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--gold);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, .3);
+        }
+
+        [data-theme="light"] .group-card:hover {
+            box-shadow: 0 10px 30px rgba(0, 0, 0, .1);
+        }
+
+        .group-banner {
+            height: 110px;
+        }
+
+        .group-body {
+            padding: 1.5rem;
+            position: relative;
+        }
+
+        .group-icon {
+            width: 58px;
+            height: 58px;
+            border-radius: 14px;
+            background: var(--bg-card);
+            border: 2px solid var(--gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            color: var(--gold-light);
+            position: absolute;
+            top: -29px;
+            left: 1.5rem;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, .25);
+            transition: .3s;
+        }
+
+        .group-card:hover .group-icon {
+            transform: scale(1.1);
+            box-shadow: 0 0 20px rgba(201, 168, 76, .35);
+        }
+
+        .group-info {
+            margin-top: 2rem;
+        }
+
+        .group-info h3 {
+            margin-bottom: .45rem;
+            font-size: 1rem;
+            font-weight: 700;
+        }
+
+        .group-info p {
+            font-size: .83rem;
+            color: var(--text-2);
+            line-height: 1.55;
+            margin-bottom: 1.25rem;
+        }
+
+        .group-foot {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid var(--border);
+            padding-top: 1rem;
+        }
+
+        .member-count {
+            font-size: .75rem;
+            color: var(--text-3);
+            display: flex;
+            align-items: center;
+            gap: .45rem;
+        }
+
+        .btn-view {
+            padding: .45rem 1rem;
+            border-radius: 20px;
+            border: 1.5px solid var(--gold);
+            color: var(--gold);
+            background: transparent;
+            font-weight: 700;
+            font-size: .78rem;
+            cursor: pointer;
+            transition: .25s;
+        }
+
+        .btn-view:hover {
+            background: var(--gold);
+            color: #050D1A;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="particles-canvas"></canvas>
+    <div class="orbs">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+    <nav class="navbar">
+        <a href="social_feed.html" class="nav-brand">
+            <div class="brand-logo"><img src="hannibal.png" alt="ENICAR"></div>
+            <div class="brand-text"><span class="eni">ENICAR</span><span class="conn">Connect</span></div>
+        </a>
+        <div class="nav-actions">
+            <a href="social_feed.html" class="nav-item"><i class="fas fa-home"></i><span>Accueil</span></a>
+            <a href="messaging.html" class="nav-item"><i class="fas fa-comment-alt"></i><span>Messages</span></a>
+            <a href="jobs.html" class="nav-item"><i class="fas fa-briefcase"></i><span>Offres</span></a>
+            <a href="resources.html" class="nav-item"><i class="fas fa-file-alt"></i><span>Documents</span></a>
+            <a href="groups.html" class="nav-item active"><i class="fas fa-users"></i><span>Groupes</span></a>
+            <a href="profile.html" class="nav-item"><i class="fas fa-user-circle"></i><span>Profil</span></a>
+            <button class="theme-btn" onclick="toggleTheme()"><i class="theme-toggle-icon fas fa-sun"></i></button>
+            <a href="login.html" class="nav-item logout"><i class="fas fa-sign-out-alt"></i><span>Quitter</span></a>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="page-header">
+            <div>
+                <h1 class="page-title">Groupes</h1>
+                <p class="page-sub">Collaborez avec vos collègues et professeurs</p>
+            </div>
+            <button class="btn-create"><i class="fas fa-plus"></i> Créer un groupe</button>
+        </div>
+        <div class="tabs">
+            <div class="tab active">Mes Groupes</div>
+            <div class="tab">Explorer</div>
+            <div class="tab">Invitations</div>
+        </div>
+        <div class="groups-grid">
+            <div class="group-card">
+                <div class="group-banner" style="background:linear-gradient(135deg,#0A1628,#1a3060);"></div>
+                <div class="group-body">
+                    <div class="group-icon"><i class="fas fa-code"></i></div>
+                    <div class="group-info">
+                        <h3>INFO2 — Groupe C</h3>
+                        <p>Groupe officiel. Partage de ressources et annonces de Faouzi JAIDI.</p>
+                        <div class="group-foot">
+                            <div class="member-count"><i class="fas fa-users"></i> 32 membres</div><button
+                                class="btn-view">Ouvrir</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="group-card">
+                <div class="group-banner" style="background:linear-gradient(135deg,#0A1628,#C9A84C 160%);"></div>
+                <div class="group-body">
+                    <div class="group-icon" style="border-color:#34d399;color:#34d399;"><i class="fas fa-microchip"></i>
+                    </div>
+                    <div class="group-info">
+                        <h3>Club Robotique ENICAR</h3>
+                        <p>Espace de collaboration pour les projets du club de l'école.</p>
+                        <div class="group-foot">
+                            <div class="member-count"><i class="fas fa-users"></i> 156 membres</div><button
+                                class="btn-view">Ouvrir</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="group-card">
+                <div class="group-banner" style="background:linear-gradient(135deg,#0D1F3C,#6366f1 160%);"></div>
+                <div class="group-body">
+                    <div class="group-icon" style="border-color:#818cf8;color:#818cf8;"><i
+                            class="fas fa-shield-alt"></i></div>
+                    <div class="group-info">
+                        <h3>Cyber-Sécurité ENICAR</h3>
+                        <p>Discussions autour de la sécurité des systèmes d'information.</p>
+                        <div class="group-foot">
+                            <div class="member-count"><i class="fas fa-users"></i> 48 membres</div><button
+                                class="btn-view">Ouvrir</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

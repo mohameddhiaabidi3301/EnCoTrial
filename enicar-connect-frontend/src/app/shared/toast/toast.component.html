@@ -1,0 +1,5 @@
+<div class="toast-container">
+    <div class="toast" *ngFor="let t of toasts" [class.removing]="t['removing']">
+        <i class="fas" [class]="t.icon"></i> {{ t.message }}
+    </div>
+</div>

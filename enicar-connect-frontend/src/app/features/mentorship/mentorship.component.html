@@ -1,0 +1,65 @@
+<app-particles-bg></app-particles-bg>
+<app-navbar></app-navbar>
+
+<div class="container" style="padding-top: 100px;">
+    <div class="header">
+        <h1>Programme de Mentorat</h1>
+        <p>Trouvez un ancien élève ou enseignant pour vous guider dans votre parcours M25 VE.</p>
+    </div>
+
+    <div class="tabs">
+        <button [class.active]="activeTab === 'MENTORS'" (click)="activeTab = 'MENTORS'">Découvrir les Mentors</button>
+        <button [class.active]="activeTab === 'MY_REQUESTS'" (click)="activeTab = 'MY_REQUESTS'">Mes Demandes</button>
+    </div>
+
+    <!-- Tab 1: Mentors -->
+    <div class="grid" *ngIf="activeTab === 'MENTORS'">
+        <div class="mentor-card" *ngFor="let mentor of availableMentors">
+            <div class="avatar">
+                <i class="fas" [class.fa-user-graduate]="mentor.role==='ALUMNI'"
+                    [class.fa-chalkboard-teacher]="mentor.role==='TEACHER'"></i>
+            </div>
+            <h3>{{ mentor.firstName }} {{ mentor.lastName }}</h3>
+            <p class="role">{{ mentor.role === 'ALUMNI' ? 'Ancien Diplômé' : 'Enseignant' }}</p>
+            <p class="dept">{{ mentor.department }}</p>
+            <button class="btn-ask" (click)="openRequestModal(mentor)">Demander du mentorat</button>
+        </div>
+        <div *ngIf="availableMentors.length === 0" style="color:white;text-align:center;">Aucun mentor disponible.</div>
+    </div>
+
+    <!-- Tab 2: Dashboard -->
+    <div class="dashboard" *ngIf="activeTab === 'MY_REQUESTS'">
+        <table class="req-table" *ngIf="myRequests.length > 0">
+            <thead>
+                <tr>
+                    <th>Demandé à</th>
+                    <th>Rôle</th>
+                    <th>Date</th>
+                    <th>Statut</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let req of myRequests">
+                    <td>{{ req.partnerName }}</td>
+                    <td>{{ req.partnerRole }}</td>
+                    <td>{{ req.date }}</td>
+                    <td><span class="badge" [ngClass]="getStatusClass(req.status)">{{ req.status }}</span></td>
+                </tr>
+            </tbody>
+        </table>
+        <div *ngIf="myRequests.length === 0" style="color:white;">Vous n'avez soumis aucune demande.</div>
+    </div>
+</div>
+
+<!-- Modal Demande -->
+<div class="modal" *ngIf="showModal">
+    <div class="modal-content">
+        <h3>Demande de mentorat à {{ selectedMentor?.firstName }}</h3>
+        <textarea [(ngModel)]="objectiveText"
+            placeholder="Expliquez vos objectifs... (ex: Orientation en cybersécurité)"></textarea>
+        <div class="actions">
+            <button class="btn-cancel" (click)="showModal=false">Annuler</button>
+            <button class="btn-submit" (click)="submitRequest()">Envoyer</button>
+        </div>
+    </div>
+</div>

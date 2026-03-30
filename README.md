@@ -17,7 +17,7 @@
 |--------|------|---------|
 | **Mohamed Jerbi** | Chef de projet | Auth & Sécurité · Admin & Modération |
 | **Mohamed Babou** | Développeur | Réseau Social · Réseau Professionnel |
-| **Mohamed Dhia Aislem Abidi** | Développeur | QR Code & Présences · Notes & Dashboard |
+| **Mohamed Dhia Islem Abidi** | Développeur | QR Code & Présences · Notes & Dashboard |
 
 ---
 

@@ -1,0 +1,51 @@
+<nav class="navbar">
+    <a routerLink="/feed" class="nav-brand">
+        <div class="brand-logo">
+            <img src="assets/hannibal.png" alt="ENICAR" onerror="this.style.display='none'">
+        </div>
+        <div class="brand-text">
+            <span class="eni">ENICAR</span><span class="conn">Connect</span>
+        </div>
+    </a>
+
+    <div class="search-wrap">
+        <i class="fas fa-search"></i>
+        <input type="text" placeholder="Rechercher sur ENICAR Connect...">
+    </div>
+
+    <div class="nav-actions">
+        <a routerLink="/feed" routerLinkActive="active" class="nav-item"><i
+                class="fas fa-home"></i><span>Accueil</span></a>
+        <a routerLink="/messaging" routerLinkActive="active" class="nav-item">
+            <i class="fas fa-comment-alt"></i><span>Messages</span>
+            <div class="notif-dot"></div>
+        </a>
+        <a routerLink="/events" routerLinkActive="active" class="nav-item"><i
+                class="fas fa-calendar-alt"></i><span>Évènements</span></a>
+        <a routerLink="/jobs" routerLinkActive="active" class="nav-item"><i
+                class="fas fa-briefcase"></i><span>Offres</span></a>
+        <a routerLink="/resources" routerLinkActive="active" class="nav-item"><i
+                class="fas fa-file-alt"></i><span>Docs</span></a>
+        <a routerLink="/groups" routerLinkActive="active" class="nav-item"><i
+                class="fas fa-users"></i><span>Groupes</span></a>
+        <a routerLink="/mentorship" routerLinkActive="active" class="nav-item"><i
+                class="fas fa-user-graduate"></i><span>Mentorat</span></a>
+        <a routerLink="/profile" routerLinkActive="active" class="nav-item"><i
+                class="fas fa-user-circle"></i><span>Profil</span></a>
+
+        <button class="theme-btn" (click)="theme.toggle()" title="Changer de thème">
+            <i class="fas" [class.fa-sun]="theme.theme()==='dark'" [class.fa-moon]="theme.theme()==='light'"></i>
+        </button>
+
+        <a routerLink="/account" routerLinkActive="active" class="account-btn" title="Mon compte">
+            <div class="account-av" [style.background]="auth.currentUser()?.avatarBg"
+                [style.color]="auth.currentUser()?.avatarColor">
+                {{ auth.currentUser()?.initials }}
+            </div>
+        </a>
+
+        <button class="nav-item logout-btn" (click)="auth.logout()">
+            <i class="fas fa-sign-out-alt"></i><span>Quitter</span>
+        </button>
+    </div>
+</nav>

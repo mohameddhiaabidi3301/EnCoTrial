@@ -1,0 +1,45 @@
+<app-particles-bg />
+
+<div class="theme-corner">
+    <button class="theme-btn" (click)="theme.toggle()">
+        <i class="fas" [class.fa-sun]="theme.theme()==='dark'" [class.fa-moon]="theme.theme()==='light'"></i>
+    </button>
+</div>
+
+<div class="login-card">
+    <div class="card-logo">
+        <div class="logo-circle">
+            <img src="assets/hannibal.png" alt="ENICAR" onerror="this.style.display='none'">
+        </div>
+        <div class="app-name">ENICAR</div>
+        <div class="app-sub">CONNECT</div>
+    </div>
+
+    <form (ngSubmit)="onLogin()">
+        <div class="form-group">
+            <label class="form-label">Adresse Email</label>
+            <div class="input-wrap">
+                <i class="fas fa-envelope"></i>
+                <input type="email" class="form-input" [(ngModel)]="email" name="email"
+                    placeholder="nom@enicar.u-carthage.tn" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-label">Mot de passe</label>
+            <div class="input-wrap">
+                <i class="fas fa-lock"></i>
+                <input type="password" class="form-input" [(ngModel)]="password" name="password" placeholder="••••••••"
+                    required>
+            </div>
+            <a href="#" class="forgot">Mot de passe oublié ?</a>
+        </div>
+        <div class="error-msg" *ngIf="error">{{ error }}</div>
+        <button type="submit" class="btn-submit" [disabled]="loading">
+            <i class="fas" [class.fa-sign-in-alt]="!loading" [class.fa-spinner]="loading" [class.fa-spin]="loading"></i>&nbsp;
+            {{ loading ? 'Connexion...' : 'Se Connecter' }}
+        </button>
+    </form>
+
+    <div class="divider">ou</div>
+    <div class="footer-txt">Pas encore de compte ? <a routerLink="/register">Créer un compte</a></div>
+</div>

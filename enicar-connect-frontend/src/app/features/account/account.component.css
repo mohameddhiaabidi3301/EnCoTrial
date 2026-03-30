@@ -1,0 +1,579 @@
+.account-wrap {
+    position: relative;
+    z-index: 2;
+    max-width: 1100px;
+    margin: 2rem auto;
+    padding: 0 2rem;
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: 1.5rem;
+    align-items: start;
+}
+
+.account-sidebar {
+    position: sticky;
+    top: calc(var(--nav-h) + 1rem);
+}
+
+.user-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.5rem;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.user-avatar {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--role-student);
+    border: 3px solid var(--bg-card);
+    margin-bottom: .75rem;
+    animation: avatarPulse 3s ease-in-out infinite;
+}
+
+.user-name {
+    font-size: .95rem;
+    font-weight: 700;
+    margin-bottom: 2px;
+}
+
+.user-email {
+    font-size: .74rem;
+    color: var(--text-3);
+    margin-bottom: .6rem;
+}
+
+.role-chip {
+    font-size: .67rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    padding: .25rem .7rem;
+    border-radius: 20px;
+}
+
+.role-chip.role-student {
+    background: rgba(99, 102, 241, .12);
+    color: var(--role-student);
+}
+
+.role-chip.role-prof {
+    background: rgba(201, 168, 76, .12);
+    color: var(--gold);
+}
+
+.role-chip.role-admin {
+    background: var(--role-admin-bg, rgba(244, 63, 94, .12));
+    color: var(--role-admin, #f43f5e);
+}
+
+.account-nav {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+.nav-link {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: .7rem;
+    padding: .85rem 1.25rem;
+    border: none;
+    background: none;
+    color: var(--text-2);
+    cursor: pointer;
+    font-size: .875rem;
+    font-weight: 500;
+    transition: .2s;
+    border-left: 3px solid transparent;
+    font-family: 'Inter', sans-serif;
+}
+
+.nav-link i {
+    width: 16px;
+    color: var(--gold);
+}
+
+.nav-link:hover {
+    background: rgba(201, 168, 76, .06);
+    color: var(--text);
+}
+
+.nav-link.active {
+    background: rgba(201, 168, 76, .1);
+    color: var(--gold);
+    border-left-color: var(--gold);
+}
+
+.nav-link.danger {
+    color: #f87171;
+}
+
+.nav-link.danger i {
+    color: #f87171;
+}
+
+.nav-link.danger:hover {
+    background: rgba(248, 113, 113, .08);
+}
+
+.account-content {
+    min-height: 500px;
+}
+
+.tab-panel {
+    animation: slideUp .3s ease;
+}
+
+.tab-title {
+    font-size: 1.25rem;
+    font-weight: 800;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: .6rem;
+}
+
+.tab-title i {
+    color: var(--gold);
+}
+
+.avatar-section {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.25rem;
+    margin-bottom: 1.5rem;
+}
+
+.big-avatar {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--role-student);
+    flex-shrink: 0;
+}
+
+.avatar-initials-input {
+    background: var(--bg-inner);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: .55rem .8rem;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 800;
+    width: 80px;
+    text-align: center;
+    outline: none;
+    transition: .2s;
+}
+
+.avatar-initials-input:focus {
+    border-color: var(--gold);
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: .4rem;
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    font-size: .78rem;
+    font-weight: 600;
+    color: var(--text-2);
+    display: flex;
+    align-items: center;
+    gap: .35rem;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+    background: var(--bg-inner);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: .65rem .95rem;
+    border-radius: 10px;
+    font-size: .875rem;
+    outline: none;
+    transition: .2s;
+    font-family: 'Inter', sans-serif;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(201, 168, 76, .1);
+}
+
+.save-row {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 1rem;
+}
+
+.btn-save {
+    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    color: #050D1A;
+    padding: .65rem 1.5rem;
+    border-radius: 12px;
+    font-weight: 700;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    transition: .25s;
+}
+
+.btn-save:hover:not(:disabled) {
+    filter: brightness(1.08);
+    transform: scale(1.02);
+}
+
+.btn-save:disabled {
+    opacity: .4;
+    cursor: not-allowed;
+}
+
+.security-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.5rem;
+    margin-bottom: 1.25rem;
+}
+
+.security-card h3 {
+    font-size: .9rem;
+    font-weight: 700;
+    margin-bottom: 1.25rem;
+    padding-bottom: .75rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.pwd-wrap {
+    position: relative;
+    display: flex;
+}
+
+.pwd-wrap input {
+    flex: 1;
+    padding-right: 2.5rem !important;
+}
+
+.pwd-eye {
+    position: absolute;
+    right: .6rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--text-3);
+    cursor: pointer;
+    padding: .2rem;
+}
+
+.pwd-strength {
+    margin: .5rem 0 1rem;
+}
+
+.strength-bar {
+    height: 4px;
+    background: var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: .35rem;
+}
+
+.strength-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width .4s, background .4s;
+}
+
+.strength-fill.weak {
+    background: #f43f5e;
+}
+
+.strength-fill.medium {
+    background: #f59e0b;
+}
+
+.strength-fill.strong {
+    background: #4ade80;
+}
+
+.strength-label {
+    font-size: .72rem;
+    color: var(--text-3);
+}
+
+.session-row {
+    display: flex;
+    align-items: center;
+    gap: .85rem;
+    padding: .75rem 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.session-row:last-child {
+    border: none;
+}
+
+.session-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: var(--bg-inner);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gold);
+    flex-shrink: 0;
+}
+
+.session-info {
+    flex: 1;
+}
+
+.session-device {
+    font-size: .85rem;
+    font-weight: 600;
+}
+
+.session-meta {
+    font-size: .72rem;
+    color: var(--text-3);
+}
+
+.current-badge {
+    background: rgba(74, 222, 128, .12);
+    color: #4ade80;
+    font-size: .68rem;
+    font-weight: 700;
+    padding: .25rem .65rem;
+    border-radius: 20px;
+}
+
+.btn-revoke {
+    padding: .35rem .8rem;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text-2);
+    font-size: .75rem;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.btn-revoke:hover {
+    border-color: #f43f5e;
+    color: #f43f5e;
+}
+
+.settings-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+    margin-bottom: 1.25rem;
+}
+
+.setting-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.setting-row:last-child {
+    border: none;
+}
+
+.setting-info {
+    flex: 1;
+}
+
+.setting-label {
+    font-size: .875rem;
+    font-weight: 600;
+    margin-bottom: 2px;
+}
+
+.setting-desc {
+    font-size: .75rem;
+    color: var(--text-3);
+}
+
+.toggle {
+    position: relative;
+    flex-shrink: 0;
+}
+
+.toggle input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.toggle-track {
+    display: block;
+    width: 44px;
+    height: 24px;
+    border-radius: 12px;
+    background: var(--border);
+    cursor: pointer;
+    transition: .3s;
+    position: relative;
+}
+
+.toggle input:checked~.toggle-track {
+    background: var(--gold);
+}
+
+.toggle-thumb {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #fff;
+    transition: .3s;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, .3);
+}
+
+.toggle input:checked~.toggle-track .toggle-thumb {
+    left: 23px;
+}
+
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, .6);
+    backdrop-filter: blur(4px);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+}
+
+.modal.confirm-modal {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    max-width: 420px;
+    width: 100%;
+    padding: 2rem;
+    text-align: center;
+    animation: slideUp .3s ease;
+}
+
+.confirm-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.confirm-icon.danger {
+    color: #f43f5e;
+}
+
+.confirm-modal h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: .5rem;
+}
+
+.confirm-modal p {
+    font-size: .85rem;
+    color: var(--text-2);
+    margin-bottom: 1.25rem;
+}
+
+.confirm-input {
+    width: 100%;
+    background: var(--bg-inner);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: .65rem .95rem;
+    border-radius: 10px;
+    font-size: .875rem;
+    outline: none;
+    margin-bottom: 1.25rem;
+    text-align: center;
+    font-family: 'Inter', sans-serif;
+}
+
+.confirm-input:focus {
+    border-color: #f43f5e;
+}
+
+.confirm-actions {
+    display: flex;
+    gap: .75rem;
+    justify-content: center;
+}
+
+.btn-cancel {
+    padding: .6rem 1.25rem;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text-2);
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-cancel:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+}
+
+.btn-delete {
+    padding: .6rem 1.4rem;
+    border-radius: 10px;
+    background: #f43f5e;
+    color: #fff;
+    font-weight: 700;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-delete:hover:not(:disabled) {
+    background: #e11d48;
+}
+
+.btn-delete:disabled {
+    opacity: .4;
+    cursor: not-allowed;
+}

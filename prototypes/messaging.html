@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ENICAR Connect — Messagerie</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="theme-manager.js"></script>
+    <style>
+        :root {
+            --gold: #C9A84C;
+            --gold-light: #E8C96A;
+            --bg: #050D1A;
+            --bg-card: #0D1F3C;
+            --bg-inner: rgba(255, 255, 255, .045);
+            --navy-nav: #0A1628;
+            --text: #FFF;
+            --text-2: rgba(255, 255, 255, .72);
+            --text-3: rgba(255, 255, 255, .40);
+            --border: rgba(201, 168, 76, .15);
+            --nav-h: 68px;
+            --conv-w: 310px;
+        }
+
+        [data-theme="light"] {
+            --bg: #F5F7FA;
+            --bg-card: #FFFFFF;
+            --bg-inner: rgba(0, 0, 0, .05);
+            --navy-nav: #FFFFFF;
+            --text: #111827;
+            --text-2: #374151;
+            --text-3: #9CA3AF;
+            --border: rgba(0, 0, 0, .09);
+        }
+
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            height: 100%;
+            overflow: hidden;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            display: flex;
+            flex-direction: column;
+            transition: background .4s, color .4s;
+        }
+
+        #particles-canvas {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .orbs {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(90px);
+            animation: orbPulse 10s ease-in-out infinite alternate;
+        }
+
+        [data-theme="light"] .orb {
+            opacity: .04;
+        }
+
+        .orb-1 {
+            width: 450px;
+            height: 450px;
+            background: radial-gradient(circle, rgba(201, 168, 76, .3), transparent);
+            top: -15%;
+            left: -8%;
+            animation-duration: 13s;
+        }
+
+        .orb-2 {
+            width: 380px;
+            height: 380px;
+            background: radial-gradient(circle, rgba(13, 31, 60, .85), transparent);
+            bottom: -12%;
+            right: -8%;
+            animation-duration: 9s;
+        }
+
+        @keyframes orbPulse {
+            0% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            50% {
+                transform: translate(18px, 14px) scale(1.07);
+            }
+
+            100% {
+                transform: translate(-10px, 22px) scale(.94);
+            }
+        }
+
+        .navbar {
+            height: var(--nav-h);
+            background: var(--navy-nav);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 3rem;
+            position: relative;
+            z-index: 300;
+            flex-shrink: 0;
+            backdrop-filter: blur(20px);
+            transition: background .4s, border-color .4s;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: .75rem;
+            text-decoration: none;
+        }
+
+        .brand-logo {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            border: 2px solid var(--gold);
+            overflow: hidden;
+        }
+
+        .brand-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .brand-text .eni {
+            color: var(--gold);
+            font-weight: 800;
+            font-size: 1.1rem;
+            letter-spacing: -.5px;
+        }
+
+        .brand-text .conn {
+            color: var(--text);
+            font-weight: 400;
+            font-size: .95rem;
+            opacity: .8;
+            margin-left: .3rem;
+            transition: color .4s;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: .4rem;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-2);
+            text-decoration: none;
+            width: 70px;
+            height: 54px;
+            border-radius: 12px;
+            gap: 3px;
+            transition: all .2s;
+        }
+
+        .nav-item i {
+            font-size: 1.15rem;
+        }
+
+        .nav-item span {
+            font-size: .6rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: .3px;
+        }
+
+        .nav-item:hover,
+        .nav-item.active {
+            color: var(--gold-light);
+            background: rgba(201, 168, 76, .09);
+        }
+
+        .nav-item.logout:hover {
+            color: #f87171;
+            background: rgba(248, 113, 113, .09);
+        }
+
+        .theme-btn {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            border: 1px solid var(--border);
+            background: var(--bg-inner);
+            color: var(--gold);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all .25s;
+            flex-shrink: 0;
+        }
+
+        .theme-btn:hover {
+            background: rgba(201, 168, 76, .15);
+            transform: rotate(20deg);
+        }
+
+        .workspace {
+            flex: 1;
+            display: grid;
+            grid-template-columns: var(--conv-w) 1fr;
+            overflow: hidden;
+            position: relative;
+            z-index: 2;
+        }
+
+        .conv-panel {
+            display: flex;
+            flex-direction: column;
+            background: var(--bg-card);
+            border-right: 1px solid var(--border);
+            transition: background .4s, border-color .4s;
+            overflow: hidden;
+        }
+
+        .conv-header {
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-shrink: 0;
+        }
+
+        .conv-header h3 {
+            font-size: 1rem;
+            font-weight: 700;
+        }
+
+        .compose-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: rgba(201, 168, 76, .1);
+            border: 1px solid var(--border);
+            color: var(--gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: .85rem;
+            transition: .2s;
+        }
+
+        .compose-btn:hover {
+            background: rgba(201, 168, 76, .22);
+            transform: scale(1.1);
+        }
+
+        .conv-search {
+            padding: .75rem 1rem;
+            border-bottom: 1px solid var(--border);
+            flex-shrink: 0;
+        }
+
+        .conv-search-inner {
+            display: flex;
+            align-items: center;
+            gap: .6rem;
+            background: var(--bg-inner);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: .45rem 1rem;
+            transition: .2s;
+        }
+
+        .conv-search-inner:focus-within {
+            border-color: var(--gold);
+        }
+
+        .conv-search-inner i {
+            color: var(--text-3);
+            font-size: .8rem;
+        }
+
+        .conv-search-inner input {
+            flex: 1;
+            border: none;
+            background: transparent;
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            font-size: .82rem;
+            outline: none;
+        }
+
+        .conv-search-inner input::placeholder {
+            color: var(--text-3);
+        }
+
+        .conv-section-lbl {
+            padding: .6rem 1.25rem .3rem;
+            font-size: .65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-3);
+        }
+
+        .conv-list {
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .conv-list::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .conv-list::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 4px;
+        }
+
+        .conv-item {
+            display: flex;
+            gap: .85rem;
+            align-items: center;
+            padding: .9rem 1.25rem;
+            cursor: pointer;
+            border-left: 3px solid transparent;
+            transition: all .2s;
+            animation: itemFadeIn .4s ease both;
+        }
+
+        @keyframes itemFadeIn {
+            from {
+                opacity: 0;
+                transform: translateX(-12px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .conv-item:nth-child(1) {
+            animation-delay: .05s;
+        }
+
+        .conv-item:nth-child(2) {
+            animation-delay: .10s;
+        }
+
+        .conv-item:nth-child(3) {
+            animation-delay: .15s;
+        }
+
+        .conv-item:nth-child(4) {
+            animation-delay: .20s;
+        }
+
+        .conv-item:hover {
+            background: rgba(201, 168, 76, .05);
+        }
+
+        .conv-item.active {
+            background: rgba(201, 168, 76, .09);
+            border-left-color: var(--gold);
+        }
+
+        .conv-av {
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            background: rgba(201, 168, 76, .1);
+            border: 1.5px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: var(--gold);
+            font-size: .82rem;
+            flex-shrink: 0;
+            position: relative;
+        }
+
+        .online-dot {
+            position: absolute;
+            bottom: 1px;
+            right: 1px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #4ade80;
+            border: 2px solid var(--bg-card);
+        }
+
+        .conv-body {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .conv-body h4 {
+            font-size: .875rem;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .conv-body p {
+            font-size: .74rem;
+            color: var(--text-3);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .conv-aside {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 4px;
+            flex-shrink: 0;
+        }
+
+        .conv-time {
+            font-size: .67rem;
+            color: var(--text-3);
+        }
+
+        .unread-badge {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: var(--gold);
+            color: #050D1A;
+            font-size: .62rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .chat-panel {
+            display: flex;
+            flex-direction: column;
+            background: var(--bg);
+            transition: background .4s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .chat-panel::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            background-image: radial-gradient(circle, rgba(201, 168, 76, .07) 1px, transparent 1px);
+            background-size: 32px 32px;
+            pointer-events: none;
+        }
+
+        [data-theme="light"] .chat-panel::before {
+            background-image: radial-gradient(circle, rgba(13, 31, 60, .05) 1px, transparent 1px);
+        }
+
+        .chat-header {
+            padding: 1rem 2rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-shrink: 0;
+            z-index: 1;
+            background: rgba(13, 31, 60, .6);
+            backdrop-filter: blur(14px);
+            transition: background .4s;
+        }
+
+        [data-theme="light"] .chat-header {
+            background: rgba(255, 255, 255, .88);
+        }
+
+        .chat-header h4 {
+            font-size: 1rem;
+            font-weight: 700;
+        }
+
+        .chat-status {
+            font-size: .73rem;
+            color: #4ade80;
+            display: flex;
+            align-items: center;
+            gap: .35rem;
+        }
+
+        .chat-status::before {
+            content: '';
+            display: inline-block;
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #4ade80;
+            animation: onlinePulse 2s ease-in-out infinite;
+        }
+
+        @keyframes onlinePulse {
+
+            0%,
+            100% {
+                box-shadow: 0 0 0 0 rgba(74, 222, 128, .5);
+            }
+
+            50% {
+                box-shadow: 0 0 0 5px rgba(74, 222, 128, 0);
+            }
+        }
+
+        .chat-header-right {
+            margin-left: auto;
+            display: flex;
+            gap: .5rem;
+        }
+
+        .icon-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--bg-inner);
+            border: 1px solid var(--border);
+            color: var(--text-2);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: .2s;
+            font-size: .9rem;
+        }
+
+        .icon-btn:hover {
+            color: var(--gold);
+            border-color: var(--gold);
+            background: rgba(201, 168, 76, .1);
+        }
+
+        .messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .messages::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .messages::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 4px;
+        }
+
+        .date-sep {
+            text-align: center;
+            display: flex;
+            align-items: center;
+            gap: .75rem;
+            color: var(--text-3);
+            font-size: .72rem;
+            margin: .5rem 0;
+        }
+
+        .date-sep::before,
+        .date-sep::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        .msg-row {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .msg-row.received {
+            align-items: flex-start;
+        }
+
+        .msg-row.sent {
+            align-items: flex-end;
+        }
+
+        .bubble {
+            max-width: 62%;
+            padding: .9rem 1.2rem;
+            border-radius: 20px;
+            font-size: .9rem;
+            line-height: 1.55;
+        }
+
+        .received .bubble {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            color: var(--text);
+            border-bottom-left-radius: 4px;
+            animation: slideFromLeft .35s cubic-bezier(.2, .8, .3, 1) both;
+        }
+
+        .sent .bubble {
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            color: #050D1A;
+            font-weight: 500;
+            border-bottom-right-radius: 4px;
+            box-shadow: 0 4px 16px rgba(201, 168, 76, .35);
+            animation: slideFromRight .35s cubic-bezier(.2, .8, .3, 1) both;
+        }
+
+        @keyframes slideFromLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideFromRight {
+            from {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .msg-time {
+            font-size: .65rem;
+            color: var(--text-3);
+            padding: 3px 4px;
+        }
+
+        .typing {
+            display: flex;
+            align-items: flex-end;
+            gap: .85rem;
+        }
+
+        .typing-bubble {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            border-bottom-left-radius: 4px;
+            padding: .8rem 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--text-3);
+            animation: typingBounce 1.2s ease-in-out infinite;
+        }
+
+        .dot:nth-child(2) {
+            animation-delay: .15s;
+        }
+
+        .dot:nth-child(3) {
+            animation-delay: .30s;
+        }
+
+        @keyframes typingBounce {
+
+            0%,
+            80%,
+            100% {
+                transform: translateY(0);
+                opacity: .5;
+            }
+
+            40% {
+                transform: translateY(-7px);
+                opacity: 1;
+            }
+        }
+
+        .chat-input-bar {
+            padding: 1rem 2rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            gap: .75rem;
+            align-items: center;
+            flex-shrink: 0;
+            z-index: 1;
+            background: rgba(13, 31, 60, .6);
+            backdrop-filter: blur(14px);
+            transition: background .4s;
+        }
+
+        [data-theme="light"] .chat-input-bar {
+            background: rgba(255, 255, 255, .88);
+        }
+
+        .attach-btn,
+        .emoji-btn {
+            color: var(--text-3);
+            cursor: pointer;
+            font-size: 1.05rem;
+            padding: .4rem;
+            transition: .2s;
+        }
+
+        .attach-btn:hover,
+        .emoji-btn:hover {
+            color: var(--gold);
+            transform: scale(1.1);
+        }
+
+        .msg-input {
+            flex: 1;
+            background: var(--bg-inner);
+            border: 1px solid var(--border);
+            padding: .8rem 1.3rem;
+            border-radius: 28px;
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            font-size: .9rem;
+            outline: none;
+            transition: .25s;
+        }
+
+        .msg-input::placeholder {
+            color: var(--text-3);
+        }
+
+        .msg-input:focus {
+            border-color: var(--gold);
+            box-shadow: 0 0 0 3px rgba(201, 168, 76, .1);
+        }
+
+        .send-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            color: #050D1A;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: .95rem;
+            transition: .25s;
+            flex-shrink: 0;
+        }
+
+        .send-btn:hover {
+            transform: scale(1.12) rotate(-5deg);
+            filter: brightness(1.1);
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="particles-canvas"></canvas>
+    <div class="orbs">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+    </div>
+    <nav class="navbar">
+        <a href="social_feed.html" class="nav-brand">
+            <div class="brand-logo"><img src="hannibal.png" alt="ENICAR"></div>
+            <div class="brand-text"><span class="eni">ENICAR</span><span class="conn">Connect</span></div>
+        </a>
+        <div class="nav-actions">
+            <a href="social_feed.html" class="nav-item"><i class="fas fa-home"></i><span>Accueil</span></a>
+            <a href="messaging.html" class="nav-item active"><i class="fas fa-comment-alt"></i><span>Messages</span></a>
+            <a href="jobs.html" class="nav-item"><i class="fas fa-briefcase"></i><span>Offres</span></a>
+            <a href="resources.html" class="nav-item"><i class="fas fa-file-alt"></i><span>Documents</span></a>
+            <a href="groups.html" class="nav-item"><i class="fas fa-users"></i><span>Groupes</span></a>
+            <a href="profile.html" class="nav-item"><i class="fas fa-user-circle"></i><span>Profil</span></a>
+            <button class="theme-btn" onclick="toggleTheme()"><i class="theme-toggle-icon fas fa-sun"></i></button>
+            <a href="login.html" class="nav-item logout"><i class="fas fa-sign-out-alt"></i><span>Quitter</span></a>
+        </div>
+    </nav>
+    <div class="workspace">
+        <div class="conv-panel">
+            <div class="conv-header">
+                <h3>Messages</h3><button class="compose-btn"><i class="fas fa-edit"></i></button>
+            </div>
+            <div class="conv-search">
+                <div class="conv-search-inner"><i class="fas fa-search"></i><input type="text"
+                        placeholder="Rechercher..."></div>
+            </div>
+            <div class="conv-section-lbl">Récents</div>
+            <div class="conv-list">
+                <div class="conv-item active">
+                    <div class="conv-av">FJ<span class="online-dot"></span></div>
+                    <div class="conv-body">
+                        <h4>Faouzi JAIDI</h4>
+                        <p>N'oubliez pas les ressources du TP...</p>
+                    </div>
+                    <div class="conv-aside"><span class="conv-time">14:32</span></div>
+                </div>
+                <div class="conv-item">
+                    <div class="conv-av">DA</div>
+                    <div class="conv-body">
+                        <h4>Dhia Abidi</h4>
+                        <p>On commence le projet demain ?</p>
+                    </div>
+                    <div class="conv-aside"><span class="conv-time">Lun.</span><span class="unread-badge">2</span></div>
+                </div>
+                <div class="conv-item">
+                    <div class="conv-av">AM<span class="online-dot"></span></div>
+                    <div class="conv-body">
+                        <h4>Ahmed Mansour</h4>
+                        <p>Merci pour l'aide Angular !</p>
+                    </div>
+                    <div class="conv-aside"><span class="conv-time">Dim.</span></div>
+                </div>
+                <div class="conv-item">
+                    <div class="conv-av">LB</div>
+                    <div class="conv-body">
+                        <h4>Leila Ben Salah</h4>
+                        <p>À tout à l'heure en cours 👋</p>
+                    </div>
+                    <div class="conv-aside"><span class="conv-time">Sam.</span></div>
+                </div>
+            </div>
+        </div>
+        <div class="chat-panel">
+            <div class="chat-header">
+                <div class="conv-av">FJ<span class="online-dot"></span></div>
+                <div>
+                    <h4>Faouzi JAIDI</h4>
+                    <div class="chat-status">En ligne</div>
+                </div>
+                <div class="chat-header-right"><button class="icon-btn"><i class="fas fa-info-circle"></i></button>
+                </div>
+            </div>
+            <div class="messages">
+                <div class="date-sep">Aujourd'hui</div>
+                <div class="msg-row received">
+                    <div class="bubble">Bonjour Mohamed. Avez-vous pu consulter les derniers documents sur la
+                        cryptographie ?</div><span class="msg-time">14:15</span>
+                </div>
+                <div class="msg-row sent">
+                    <div class="bubble">Oui Monsieur Jaidi, je les ai téléchargés depuis la section ressources. Très
+                        utiles pour le labo !</div><span class="msg-time">14:20</span>
+                </div>
+                <div class="msg-row received">
+                    <div class="bubble">Parfait. N'oubliez pas de partager vos questions avec le groupe avant le TP de
+                        vendredi. Je compte sur vous.</div><span class="msg-time">14:32</span>
+                </div>
+                <div class="msg-row sent">
+                    <div class="bubble">Bien sûr, je vais le faire ce soir. Bonne journée ! 🙏</div><span
+                        class="msg-time">14:35</span>
+                </div>
+                <div class="typing">
+                    <div class="conv-av" style="width:36px;height:36px;font-size:.72rem">FJ</div>
+                    <div class="typing-bubble">
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="chat-input-bar">
+                <i class="fas fa-paperclip attach-btn"></i>
+                <i class="far fa-smile emoji-btn"></i>
+                <input type="text" class="msg-input" placeholder="Écrire un message...">
+                <button class="send-btn"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

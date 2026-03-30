@@ -1,0 +1,185 @@
+.container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1.5rem;
+}
+
+.group-header {
+    height: 300px;
+    border-radius: 20px;
+    overflow: hidden;
+    position: relative;
+    margin-bottom: 2rem;
+    box-shadow: var(--shadow-xl);
+}
+
+.header-overlay {
+    background: linear-gradient(to bottom, transparent, rgba(5, 13, 26, 0.9));
+    height: 100%;
+    display: flex;
+    align-items: flex-end;
+    padding: 2.5rem;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    width: 100%;
+}
+
+.group-brand {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.group-identity {
+    width: 100px;
+    height: 100px;
+    background: var(--bg-card);
+    border-radius: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    box-shadow: var(--shadow-lg);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.group-titles h1 {
+    font-size: 2.5rem;
+    margin: 0;
+    color: var(--text-1);
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+.group-titles p {
+    color: var(--text-2);
+    margin: 0.5rem 0 0;
+    font-size: 1.1rem;
+}
+
+.header-stats {
+    display: flex;
+    gap: 3rem;
+}
+
+.stat {
+    text-align: center;
+}
+
+.stat span {
+    display: block;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--gold);
+}
+
+.stat small {
+    color: var(--text-3);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 0.75rem;
+}
+
+.detail-layout {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 2rem;
+}
+
+.tabs-vertical {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    position: sticky;
+    top: 6rem;
+}
+
+.v-tab {
+    padding: 1.25rem 1.5rem;
+    background: var(--bg-card);
+    border-radius: 15px;
+    color: var(--text-2);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 1px solid transparent;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.v-tab:hover {
+    background: var(--bg-inner);
+    color: var(--text-1);
+}
+
+.v-tab.active {
+    background: var(--bg-card);
+    border-color: var(--gold-glow);
+    color: var(--gold);
+    box-shadow: 0 5px 15px rgba(201, 168, 76, 0.1);
+}
+
+.card {
+    background: var(--bg-card);
+    border-radius: 20px;
+    padding: 1.5rem;
+    border: 1px solid var(--border);
+    backdrop-filter: blur(10px);
+}
+
+.composer textarea {
+    width: 100%;
+    background: var(--bg-inner);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1rem;
+    color: var(--text-1);
+    resize: none;
+    margin-bottom: 1rem;
+}
+
+.composer-foot {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.btn-post {
+    background: var(--gold);
+    color: #050D1A;
+    border: none;
+    padding: 0.75rem 2rem;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 5rem 2rem;
+    color: var(--text-3);
+}
+
+.empty-state i {
+    font-size: 4rem;
+    margin-bottom: 1.5rem;
+    opacity: 0.3;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in {
+    animation: fadeIn 0.4s ease forwards;
+}
