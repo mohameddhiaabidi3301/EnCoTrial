@@ -22,3 +22,8 @@ enicar-connect-backend/uploads/
 *.iml
 Thumbs.db
 .DS_Store
+
+# Fichiers locaux non publiés
+*.jpg
+prototypes/
+prototypes.zip
