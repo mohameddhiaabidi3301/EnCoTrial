@@ -44,7 +44,7 @@ interface AuthResponse {
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-    private readonly API = 'http://localhost:8081/api/auth';
+    private readonly API = 'https://encotrial-production.up.railway.app';
     private http = inject(HttpClient);
     private router = inject(Router);
 
