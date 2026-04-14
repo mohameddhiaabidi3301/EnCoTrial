@@ -67,7 +67,7 @@ export class AuthService {
 
     async login(email: string, password: string): Promise<boolean> {
         try {
-            const res = await this.http.post<AuthResponse>(`${this.API}/login`, { email, password }).toPromise();
+            const res = await this.http.post<AuthResponse>(`${this.API}/api/auth/login`, { email, password }).toPromise();
             if (res && res.token) {
                 this.handleAuthResponse(res);
                 return true;
@@ -80,7 +80,7 @@ export class AuthService {
 
     async register(request: RegisterRequest): Promise<{ success: boolean; error?: string }> {
         try {
-            const res = await this.http.post<AuthResponse>(`${this.API}/register`, request).toPromise();
+            const res = await this.http.post<AuthResponse>(`${this.API}/api/auth/register`, request).toPromise();
             if (res && res.token) {
                 this.handleAuthResponse(res);
                 return { success: true };
