@@ -121,4 +121,42 @@
             "userId": 1
         }
     ]
+    ,
+"grades": [
+    {
+        "studentEmail": "student@enicar.ucar.tn",
+        "subject": "Algorithmique",
+        "score": 14.5,
+        "semester": "S1"
+    },
+    {
+        "studentEmail": "student@enicar.ucar.tn",
+        "subject": "Mathématiques",
+        "score": 12.0,
+        "semester": "S1"
+    },
+    {
+        "studentEmail": "student@enicar.ucar.tn",
+        "subject": "Réseaux",
+        "score": 9.5,
+        "semester": "S1"
+    }
+],
+"attendances": [
+    {
+        "studentEmail": "student@enicar.ucar.tn",
+        "courseCode": "ALGO101",
+        "present": true
+    },
+    {
+        "studentEmail": "student@enicar.ucar.tn",
+        "courseCode": "MATH201",
+        "present": true
+    },
+    {
+        "studentEmail": "student@enicar.ucar.tn",
+        "courseCode": "RES301",
+        "present": false
+    }
+]
 }
