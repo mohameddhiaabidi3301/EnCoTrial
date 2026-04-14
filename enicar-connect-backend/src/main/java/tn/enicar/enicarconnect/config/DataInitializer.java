@@ -26,6 +26,8 @@ public class DataInitializer implements CommandLineRunner {
     private final PostRepository postRepo;
     private final CommentRepository commentRepo;
     private final PostLikeRepository likeRepo;
+    private final GradeRepository gradeRepo;
+    private final AttendanceRepository attendanceRepo;
     private final PasswordEncoder passwordEncoder;
     private final ObjectMapper objectMapper;
 
@@ -39,8 +41,7 @@ public class DataInitializer implements CommandLineRunner {
         log.info("Starting comprehensive database initialization from seed-data.json...");
 
         InputStream inputStream = TypeReference.class.getResourceAsStream("/seed-data.json");
-        Map<String, List<Map<String, Object>>> data = objectMapper.readValue(inputStream, new TypeReference<>() {
-        });
+        Map<String, List<Map<String, Object>>> data = objectMapper.readValue(inputStream, new TypeReference<>() {});
 
         Map<Integer, User> userMap = new HashMap<>();
         Map<Integer, AppGroup> groupMap = new HashMap<>();
@@ -81,8 +82,6 @@ public class DataInitializer implements CommandLineRunner {
                     .build();
             group = groupRepo.save(group);
             groupMap.put((Integer) gMap.get("id"), group);
-
-            // Add creator as Admin
             memberRepo.save(GroupMember.builder().group(group).user(creator).memberRole(MemberRole.ADMIN).build());
             log.info("Created group: {}", group.getName());
         }
@@ -92,17 +91,13 @@ public class DataInitializer implements CommandLineRunner {
         for (Map<String, Object> pMap : postsData) {
             User author = userMap.get((Integer) pMap.get("authorId"));
             Integer gId = (Integer) pMap.get("groupId");
-
             Post post = Post.builder()
                     .author(author)
                     .body((String) pMap.get("body"))
                     .visibility(Visibility.valueOf((String) pMap.get("visibility")))
                     .group(gId != null ? groupMap.get(gId) : null)
                     .build();
-
-            // Extract hashtags automatically
             post.setHashtags(extractHashtags(post.getBody()));
-
             post = postRepo.save(post);
             postMap.put((Integer) pMap.get("id"), post);
             log.info("Created post ID: {} by {}", post.getId(), author.getEmail());
@@ -113,13 +108,7 @@ public class DataInitializer implements CommandLineRunner {
         for (Map<String, Object> cMap : commentsData) {
             Post post = postMap.get((Integer) cMap.get("postId"));
             User author = userMap.get((Integer) cMap.get("authorId"));
-
-            Comment comment = Comment.builder()
-                    .post(post)
-                    .author(author)
-                    .text((String) cMap.get("text"))
-                    .build();
-            commentRepo.save(comment);
+            commentRepo.save(Comment.builder().post(post).author(author).text((String) cMap.get("text")).build());
         }
 
         // 5. Seed Likes
@@ -127,21 +116,46 @@ public class DataInitializer implements CommandLineRunner {
         for (Map<String, Object> lMap : likesData) {
             Post post = postMap.get((Integer) lMap.get("postId"));
             User user = userMap.get((Integer) lMap.get("userId"));
-
             likeRepo.save(PostLike.builder().post(post).user(user).build());
+        }
+
+        // 6. Seed Grades
+        List<Map<String, Object>> gradesData = data.get("grades");
+        if (gradesData != null) {
+            for (Map<String, Object> gMap : gradesData) {
+                Grade grade = Grade.builder()
+                        .studentEmail((String) gMap.get("studentEmail"))
+                        .subject((String) gMap.get("subject"))
+                        .score(((Number) gMap.get("score")).doubleValue())
+                        .semester((String) gMap.get("semester"))
+                        .build();
+                gradeRepo.save(grade);
+                log.info("Created grade: {} - {}", grade.getStudentEmail(), grade.getSubject());
+            }
+        }
+
+        // 7. Seed Attendances
+        List<Map<String, Object>> attendancesData = data.get("attendances");
+        if (attendancesData != null) {
+            for (Map<String, Object> aMap : attendancesData) {
+                Attendance attendance = Attendance.builder()
+                        .studentEmail((String) aMap.get("studentEmail"))
+                        .courseCode((String) aMap.get("courseCode"))
+                        .present((Boolean) aMap.get("present"))
+                        .build();
+                attendanceRepo.save(attendance);
+                log.info("Created attendance: {} - {}", attendance.getStudentEmail(), attendance.getCourseCode());
+            }
         }
 
         log.info("Comprehensive database initialization completed.");
     }
 
     private String extractHashtags(String body) {
-        if (body == null)
-            return null;
+        if (body == null) return null;
         java.util.Set<String> tags = new java.util.LinkedHashSet<>();
         java.util.regex.Matcher m = java.util.regex.Pattern.compile("#(\\w+)").matcher(body);
-        while (m.find()) {
-            tags.add(m.group(1).toLowerCase());
-        }
+        while (m.find()) tags.add(m.group(1).toLowerCase());
         return tags.isEmpty() ? null : String.join(",", tags);
     }
 }
