@@ -6,7 +6,7 @@ import { tap } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class EventService {
-    private readonly API = 'http://localhost:8081/api/events';
+    private readonly API = 'https://encotrial-production.up.railway.app/api/events';
     private http = inject(HttpClient);
 
     private _events = new BehaviorSubject<AppEvent[]>([]);
