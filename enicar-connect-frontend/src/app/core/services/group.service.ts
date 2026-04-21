@@ -5,7 +5,7 @@ import { Group } from '../models/group.model';
 
 @Injectable({ providedIn: 'root' })
 export class GroupService {
-    private readonly API = 'http://localhost:8081/api/groups';
+    private readonly API = 'https://encotrial-production.up.railway.app/api/groups';
     private http = inject(HttpClient);
 
     private _groups = new BehaviorSubject<Group[]>([]);
