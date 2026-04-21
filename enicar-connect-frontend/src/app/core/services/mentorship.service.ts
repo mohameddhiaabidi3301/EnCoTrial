@@ -24,7 +24,7 @@ export interface MentorDTO {
 @Injectable({ providedIn: 'root' })
 export class MentorshipService {
     private http = inject(HttpClient);
-    private API = 'http://localhost:8081/api/mentorship';
+    private API = 'https://encotrial-production.up.railway.app/api/mentorship';
 
     getAvailableMentors(): Observable<MentorDTO[]> {
         return this.http.get<MentorDTO[]>(`${this.API}/available-mentors`);
