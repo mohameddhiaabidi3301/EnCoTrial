@@ -6,7 +6,7 @@ import { tap } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class JobService {
-    private readonly API = 'http://localhost:8081/api/jobs';
+    private readonly API = 'https://encotrial-production.up.railway.app/api/jobs';
     private http = inject(HttpClient);
 
     private _jobs = new BehaviorSubject<Job[]>([]);
