@@ -88,7 +88,7 @@ export class SocialFeedComponent {
   formatBody(body: string): string {
     return body
       .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-      .replace(/#(\w+)/g, '<span style="color:var(--gold);font-weight:600;cursor:pointer">#$1</span>')
+      .replace(/#(\w+)/g, '<span style="font-weight:600;cursor:pointer">#$1</span>')
       .replace(/\n/g, '<br>');
   }
 
