@@ -30,7 +30,7 @@ export class ChatService {
         this.stompClient = new Client({
             // Note: on utilise wss:// ou ws:// directement si SockJS n'est pas activé côté server, 
             // mais comme @stomp/stompjs le supporte bien, on injecte SockJS ou l'URL WebSocket vanilla
-            brokerURL: 'ws://localhost:8081/ws',
+            brokerURL: 'wss://encotrial-production.up.railway.app/ws',
             // webSocketFactory: () => new SockJS('http://localhost:8081/ws'), // Décommentez si vous utilisez .withSockJS() en backend
             debug: (msg: string) => console.log('STOMP: ' + msg),
             reconnectDelay: 2000,
@@ -51,7 +51,7 @@ export class ChatService {
     }
 
     public getConversation(partnerId: number): void {
-        this.http.get<ChatMessage[]>(`http://localhost:8081/api/messages/${partnerId}`)
+        this.http.get<ChatMessage[]>(`https://encotrial-production.up.railway.app/api/messages/${partnerId}`)
             .subscribe({
                 next: (msgs) => this._messages.next(msgs),
                 error: (err) => {
