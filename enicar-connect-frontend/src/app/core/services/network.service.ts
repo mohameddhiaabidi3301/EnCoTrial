@@ -21,7 +21,7 @@ export interface ConnectionReq {
 
 @Injectable({ providedIn: 'root' })
 export class NetworkService {
-    private readonly API = 'http://localhost:8081/api/network';
+    private readonly API = 'https://encotrial-production.up.railway.app/api/network';
     private http = inject(HttpClient);
 
     // Récupérer la liste des connexions approuvées (le réseau)
